@@ -24,6 +24,10 @@ export class Board {
     this.blocks = this.blocks.map((block) => { return { ...block, location: { x: block.location.x, y: block.location.y + 1 } } })
   }
 
+  hasFalling(): boolean {
+    return this.isBlockFalling;
+  }
+
   drop(block: string): void {
     if (!this.isBlockFalling) {
       const boardMiddlePoint = Math.floor(this.width / 2);
