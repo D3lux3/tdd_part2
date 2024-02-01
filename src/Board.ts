@@ -11,11 +11,13 @@ export class Board {
   width: number;
   height: number;
   blocks: Block[];
+  isBlockFalling: boolean
 
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
     this.blocks = [];
+    this.isBlockFalling = false;
   }
 
   tick(): void {
@@ -23,9 +25,14 @@ export class Board {
   }
 
   drop(block: string): void {
-    const boardMiddlePoint = Math.floor(this.width / 2);
-    const newBlock = { block, location: { x: boardMiddlePoint, y: 0 } };
-    this.blocks = [newBlock, ...this.blocks];
+    if (!this.isBlockFalling) {
+      const boardMiddlePoint = Math.floor(this.width / 2);
+      const newBlock = { block, location: { x: boardMiddlePoint, y: 0 } };
+      this.blocks = [newBlock, ...this.blocks];
+      this.isBlockFalling = true;
+      return;
+    }
+    throw new Error("already falling");
   }
 
   toString() {
