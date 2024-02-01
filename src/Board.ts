@@ -12,7 +12,7 @@ export class Board {
   width: number;
   height: number;
   blocks: Map<string, Block>;
-  fallingBlock: string | undefined
+  fallingBlockId: string | undefined
 
   constructor(width: number, height: number) {
     this.width = width;
@@ -21,24 +21,24 @@ export class Board {
   }
 
   tick(): void {
-    if (this.fallingBlock) {
-      const block = this.blocks.get(this.fallingBlock);
+    if (this.fallingBlockId) {
+      const block = this.blocks.get(this.fallingBlockId);
       if (block) {
-        this.blocks.set(this.fallingBlock, { ...block, location: { x: block.location.x, y: block.location.y + 1 } })
+        this.blocks.set(this.fallingBlockId, { ...block, location: { x: block.location.x, y: block.location.y + 1 } })
       }
     }
   }
 
   hasFalling(): boolean {
-    return this.fallingBlock !== undefined;
+    return this.fallingBlockId !== undefined;
   }
 
   drop(block: string): void {
-    if (!this.fallingBlock) {
+    if (!this.fallingBlockId) {
       const boardMiddlePoint = Math.floor(this.width / 2);
       const blockId = uuidv4();
       this.blocks.set(blockId, { block, location: { x: boardMiddlePoint, y: 0 } })
-      this.fallingBlock = blockId;
+      this.fallingBlockId = blockId;
       return;
     }
     throw new Error("already falling");
