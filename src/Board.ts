@@ -25,6 +25,11 @@ export class Board {
   }
 
   toString() {
-    return (".".repeat(this.width) + "\n").repeat(this.height);
+    const emptyBoard = (".".repeat(this.width) + "\n").repeat(this.height);
+    return this.blocks.reduce((b, block) => {
+      const { x, y } = block.location;
+      const blockIndexOnBoard = (y * this.width) + x;
+      return b.substring(0, blockIndexOnBoard) + `${block.block}` + b.substring(blockIndexOnBoard + 1);
+    }, emptyBoard);
   }
 }
