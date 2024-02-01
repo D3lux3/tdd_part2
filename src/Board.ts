@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 
 interface Block {
   block: string,
@@ -10,14 +11,13 @@ interface Block {
 export class Board {
   width: number;
   height: number;
-  blocks: Block[];
-  isBlockFalling: boolean
+  blocks: Map<string, Block>;
+  fallingBlock: string | undefined
 
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
-    this.blocks = [];
-    this.isBlockFalling = false;
+    this.blocks = new Map();
   }
 
   tick(): void {
@@ -25,15 +25,15 @@ export class Board {
   }
 
   hasFalling(): boolean {
-    return this.isBlockFalling;
+    return this.fallingBlock !== undefined;
   }
 
   drop(block: string): void {
-    if (!this.isBlockFalling) {
+    if (!this.fallingBlock) {
       const boardMiddlePoint = Math.floor(this.width / 2);
-      const newBlock = { block, location: { x: boardMiddlePoint, y: 0 } };
-      this.blocks = [newBlock, ...this.blocks];
-      this.isBlockFalling = true;
+      const blockId = uuidv4();
+      this.blocks.set(blockId, { block, location: { x: boardMiddlePoint, y: 0 } })
+      this.fallingBlock = blockId;
       return;
     }
     throw new Error("already falling");
@@ -41,7 +41,7 @@ export class Board {
 
   toString() {
     const emptyBoard = (".".repeat(this.width) + "\n").repeat(this.height);
-    return this.blocks.reduce((b, block) => {
+    return [...this.blocks.values()].reduce((b, block) => {
       const { x, y } = block.location;
       const blockIndexOnBoard = (y * (this.width + 1)) + x;
       return b.substring(0, blockIndexOnBoard) + `${block.block}` + b.substring(blockIndexOnBoard + 1);
