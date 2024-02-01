@@ -1,6 +1,6 @@
 import { beforeEach, describe, test } from "vitest";
 import { expect } from "chai";
-import { Board } from "../src/Board.mjs";
+import { Board } from "../src/Board.ts";
 
 describe("Falling blocks", () => {
   let board;
