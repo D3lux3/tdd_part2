@@ -1,4 +1,4 @@
-import { Board } from "./Board.mjs";
+import { Board } from "./Board.js";
 import { ScoringSystem } from "./ScoringSystem.mjs";
 import { ShuffleBag } from "./ShuffleBag.mjs";
 import { Tetromino } from "./Tetromino.mjs";
