@@ -1,8 +1,8 @@
 export class Board {
-  width;
-  height;
+  width: number;
+  height: number;
 
-  constructor(width, height) {
+  constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
   }
