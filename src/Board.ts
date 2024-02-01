@@ -21,7 +21,12 @@ export class Board {
   }
 
   tick(): void {
-    this.blocks = this.blocks.map((block) => { return { ...block, location: { x: block.location.x, y: block.location.y + 1 } } })
+    if (this.fallingBlock) {
+      const block = this.blocks.get(this.fallingBlock);
+      if (block) {
+        this.blocks.set(this.fallingBlock, { ...block, location: { x: block.location.x, y: block.location.y + 1 } })
+      }
+    }
   }
 
   hasFalling(): boolean {
