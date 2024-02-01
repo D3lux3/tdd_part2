@@ -7,6 +7,10 @@ export class Board {
     this.height = height;
   }
 
+  drop(block: string): void {
+
+  }
+
   toString() {
     return `...\n...\n...\n`;
   }
