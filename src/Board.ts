@@ -12,6 +12,6 @@ export class Board {
   }
 
   toString() {
-    return `...\n...\n...\n`;
+    return (".".repeat(this.width) + "\n").repeat(this.height);
   }
 }
