@@ -4,11 +4,11 @@ export class RotatingShape {
     readonly shape: string
 
     constructor(shape: string) {
-        this.shape = shape.split("\n").map((str) => str.trim() + "\n").join("");
+        this.shape = shape.split("\n").map((str) => str.trim()).join("\n");
     }
 
     rotateRight(): RotatingShape {
-        const lines = this.shape.split("\n").slice(0, -1)
+        const lines = this.shape.split("\n")
         const transpose = lines[0].split('').map((_, col) => {
             return lines.map(line => line[col]).reverse().join('')
         }).join("\n");
@@ -16,6 +16,6 @@ export class RotatingShape {
     }
 
     toString(): string {
-        return this.shape;
+        return this.shape + "\n";
     }
 }
