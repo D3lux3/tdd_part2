@@ -1,7 +1,6 @@
-/*
 import { describe, test } from "vitest";
 import { expect } from "chai";
-import { Tetromino } from "../src/Tetromino.mjs";
+import { Tetromino } from "../src/Tetromino.ts";
 
 function distinctOrientations(shape) {
   const distinct = new Set();
@@ -18,7 +17,7 @@ function distinctOrientations(shape) {
 
 describe("The T shape", () => {
   const shape = Tetromino.T_SHAPE;
-
+  
   test("initial orientation", () => {
     expect(shape.toString()).to.equalShape(
       `.T.
@@ -47,7 +46,6 @@ describe("The T shape", () => {
     expect(distinctOrientations(shape).size).to.equal(4);
   });
 });
-*/
 
 /*
 describe("The I shape", () => {
