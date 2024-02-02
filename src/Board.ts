@@ -20,13 +20,17 @@ export class Board {
     this.blocks = new Map();
   }
 
+  private isSquareValid(x: number, y: number): boolean {
+    return y < this.height && [...this.blocks.values()].filter(({ location: { x: blockX, y: blockY } }) => blockX === x && blockY === y).length === 0;
+  }
+
   tick(): void {
     if (this.fallingBlockId) {
       const block = this.blocks.get(this.fallingBlockId);
       if (block) {
         const newYCoord = block.location.y + 1;
-        if (newYCoord < this.height) {
-          this.blocks.set(this.fallingBlockId, { ...block, location: { x: block.location.x, y: block.location.y + 1 } })
+        if (this.isSquareValid(block.location.x, newYCoord)) {
+          this.blocks.set(this.fallingBlockId, { ...block, location: { x: block.location.x, y: newYCoord } })
           return;
         }
         delete this.fallingBlockId;
