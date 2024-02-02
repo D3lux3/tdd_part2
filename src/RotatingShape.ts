@@ -7,8 +7,12 @@ export class RotatingShape {
         this.shape = shape.split("\n").map((str) => str.trim()).join("\n");
     }
 
+    private shapeAsLines(): string[] {
+        return this.shape.split("\n");
+    }
+
     rotateRight(): RotatingShape {
-        const lines = this.shape.split("\n")
+        const lines = this.shapeAsLines();
         const transpose = lines[0].split('').map((_, col) => {
             return lines.map(line => line[col]).reverse().join('')
         }).join("\n");
@@ -16,7 +20,7 @@ export class RotatingShape {
     }
 
     rotateLeft(): RotatingShape {
-        const lines = this.shape.split("\n")
+        const lines = this.shapeAsLines();
         const transpose = lines[0].split('').map((_, col) => {
             return lines.map(line => line.split('').reverse().join('')[col]).join('')
         }).join("\n");
