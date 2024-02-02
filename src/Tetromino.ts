@@ -3,6 +3,8 @@ import { RotatingShape } from "./RotatingShape";
 export class Tetromino {
 
     static readonly T_SHAPE = new Tetromino(`.T.\nTTT\n...`);
+    static readonly I_SHAPE = new Tetromino(`.....\n.....\nIIII.\n.....\n.....`)
+
 
     readonly shape: RotatingShape;
 

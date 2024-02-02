@@ -42,12 +42,12 @@ describe("The T shape", () => {
     );
   });
 
-  test.skip("has 4 distinct orientations", () => {
+  test("has 4 distinct orientations", () => {
     expect(distinctOrientations(shape).size).to.equal(4);
   });
 });
 
-/*
+
 describe("The I shape", () => {
   const shape = Tetromino.I_SHAPE;
 
@@ -85,7 +85,7 @@ describe("The I shape", () => {
     expect(distinctOrientations(shape).size).to.equal(2);
   });
 });
-*/
+
 
 /*
 describe("The O shape", () => {
