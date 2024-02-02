@@ -24,7 +24,12 @@ export class Board {
     if (this.fallingBlockId) {
       const block = this.blocks.get(this.fallingBlockId);
       if (block) {
-        this.blocks.set(this.fallingBlockId, { ...block, location: { x: block.location.x, y: block.location.y + 1 } })
+        const newYCoord = block.location.y + 1;
+        if (newYCoord < this.height) {
+          this.blocks.set(this.fallingBlockId, { ...block, location: { x: block.location.x, y: block.location.y + 1 } })
+          return;
+        }
+        delete this.fallingBlockId;
       }
     }
   }
