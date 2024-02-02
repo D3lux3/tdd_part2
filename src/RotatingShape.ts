@@ -15,6 +15,14 @@ export class RotatingShape {
         return new RotatingShape(transpose);
     }
 
+    rotateLeft(): RotatingShape {
+        const lines = this.shape.split("\n")
+        const transpose = lines[0].split('').map((_, col) => {
+            return lines.map(line => line.split('').reverse().join('')[col]).join('')
+        }).join("\n");
+        return new RotatingShape(transpose);
+    }
+
     toString(): string {
         return this.shape + "\n";
     }
