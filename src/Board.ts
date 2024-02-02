@@ -24,18 +24,21 @@ export class Board {
     return y < this.height && [...this.blocks.values()].filter(({ location: { x: blockX, y: blockY } }) => blockX === x && blockY === y).length === 0;
   }
 
+  getFallingBlock(): Block | undefined {
+    return this.fallingBlockId ? this.blocks.get(this.fallingBlockId) : undefined;
+  }
+
   tick(): void {
-    if (this.fallingBlockId) {
-      const block = this.blocks.get(this.fallingBlockId);
-      if (block) {
-        const newYCoord = block.location.y + 1;
-        if (this.isSquareValid(block.location.x, newYCoord)) {
-          this.blocks.set(this.fallingBlockId, { ...block, location: { x: block.location.x, y: newYCoord } })
-          return;
-        }
-        delete this.fallingBlockId;
+    const fallingBlock = this.getFallingBlock();
+    if (fallingBlock) {
+      const newYCoord = fallingBlock.location.y + 1;
+      if (this.isSquareValid(fallingBlock.location.x, newYCoord)) {
+        this.blocks.set((this.fallingBlockId as string), { ...fallingBlock, location: { x: fallingBlock.location.x, y: newYCoord } })
+        return;
       }
+      delete this.fallingBlockId;
     }
+
   }
 
   hasFalling(): boolean {
