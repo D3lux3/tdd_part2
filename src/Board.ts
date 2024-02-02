@@ -38,7 +38,6 @@ export class Board {
       }
       delete this.fallingBlockId;
     }
-
   }
 
   hasFalling(): boolean {
