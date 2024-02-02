@@ -12,12 +12,16 @@ export class Tetromino {
         this.shape = new RotatingShape(shape);
     }
 
+    private rotate(lines: string[]): string[] {
+        return lines[0].split('').map((_, col) => lines.map(line => line[col]).join(''));
+    }
+
     rotateRight(): Tetromino {
         return new Tetromino(this.shape.rotateRight().shape)
     }
 
     rotateLeft(): Tetromino {
-        return new Tetromino(this.shape.rotateLeft().shape)
+        return new Tetromino(this.rotate(this.shape.shape.split("\n")).join("\n"))
     }
 
 
