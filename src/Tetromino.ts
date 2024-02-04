@@ -11,10 +11,10 @@ export class Tetromino {
     readonly shape: RotatingShape;
     readonly currentOrientation: number;
 
-    constructor(maxOrientations: number, currentOrientation: number, shape: string) {
+    constructor(maxOrientations: number, currentOrientation: number, shape: string, orientations?: RotatingShape[]) {
         this.shape = new RotatingShape(shape);
         this.maxOrientations = maxOrientations;
-        this.orientations = this.createOrientations(1, [this.shape]);
+        this.orientations = orientations ? orientations : this.createOrientations(1, [this.shape]);
         this.currentOrientation = currentOrientation;
     }
 
@@ -28,12 +28,12 @@ export class Tetromino {
 
     rotateRight(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation + 1);
-        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape);
+        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations);
     }
 
     rotateLeft(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation - 1);
-        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape);
+        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations);
     }
 
 
