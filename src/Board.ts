@@ -2,11 +2,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { Tetromino } from './Tetromino';
 import { Coordinate } from './types';
 
-interface Block {
-  block: Tetromino,
-  location: Coordinate[]
-}
-
 export class Board {
   width: number;
   height: number;
