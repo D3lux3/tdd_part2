@@ -1,12 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Tetromino } from './Tetromino';
 
+interface Coordinate {
+  x: number,
+  y: number
+}
+
 interface Block {
   block: Tetromino,
-  location: {
-    x: number,
-    y: number
-  }
+  location: Coordinate[]
 }
 
 export class Board {
@@ -22,7 +24,7 @@ export class Board {
   }
 
   private isSquareValid(x: number, y: number): boolean {
-    return y < this.height && [...this.blocks.values()].filter(({ location: { x: blockX, y: blockY } }) => blockX === x && blockY === y).length === 0;
+    return y < this.height && [...this.blocks.values()].map((block) => block.location[0]).filter(({ x: blockX, y: blockY }) => blockX === x && blockY === y).length === 0;
   }
 
   getFallingBlock(): Block | undefined {
@@ -32,9 +34,9 @@ export class Board {
   tick(): void {
     const fallingBlock = this.getFallingBlock();
     if (fallingBlock) {
-      const newYCoord = fallingBlock.location.y + 1;
-      if (this.isSquareValid(fallingBlock.location.x, newYCoord)) {
-        this.blocks.set((this.fallingBlockId as string), { ...fallingBlock, location: { x: fallingBlock.location.x, y: newYCoord } })
+      const newYCoord = fallingBlock.location[0].y + 1;
+      if (this.isSquareValid(fallingBlock.location[0].x, newYCoord)) {
+        this.blocks.set((this.fallingBlockId as string), { ...fallingBlock, location: [{ x: fallingBlock.location[0].x, y: newYCoord }] })
         return;
       }
       delete this.fallingBlockId;
@@ -54,7 +56,7 @@ export class Board {
       const boardMiddlePoint = Math.floor(this.width / 2);
       const blockId = uuidv4();
       const converted = this.tetrominoConverter(block);
-      this.blocks.set(blockId, { block: converted, location: { x: boardMiddlePoint, y: 0 } })
+      this.blocks.set(blockId, { block: converted, location: [{ x: boardMiddlePoint, y: 0 }] })
       this.fallingBlockId = blockId;
       return;
     }
@@ -64,7 +66,7 @@ export class Board {
   toString() {
     const emptyBoard = (".".repeat(this.width) + "\n").repeat(this.height);
     return [...this.blocks.values()].reduce((b, block) => {
-      const { x, y } = block.location;
+      const { x, y } = block.location[0];
       const blockIndexOnBoard = (y * (this.width + 1)) + x;
       return b.substring(0, blockIndexOnBoard) + `${block.block.shape}` + b.substring(blockIndexOnBoard + 1);
     }, emptyBoard);
