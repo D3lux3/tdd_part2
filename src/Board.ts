@@ -14,7 +14,6 @@ export class Board {
     this.blocks = new Map();
   }
 
-
   private isSquareValid(tetromino: Tetromino): boolean {
     const yCoordinates = [...this.blocks.values()].map((block) => block.coordinates).flat().map((coordinate) => coordinate.y)
     return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height).length === 0 &&
@@ -40,15 +39,15 @@ export class Board {
     return this.fallingBlockId !== undefined;
   }
 
-  private tetrominoConverter(block: string | Tetromino) {
-    return typeof (block) === "string" ? new Tetromino(4, 1, block) : block;
+  private toTetromino(block: string | Tetromino, coordinates: Coordinate[]) {
+    return typeof (block) === "string" ? new Tetromino(4, 1, block, undefined, coordinates) : block;
   }
 
   drop(block: string | Tetromino): void {
     if (!this.fallingBlockId) {
       const blockId = uuidv4();
       const startingCoordinates: Coordinate[] = [{ x: Math.floor(this.width / 2), y: 0 }]
-      const converted = this.tetrominoConverter(block).setCoordinates(startingCoordinates);
+      const converted = this.toTetromino(block, startingCoordinates);
       this.blocks.set(blockId, converted)
       this.fallingBlockId = blockId;
       return;
