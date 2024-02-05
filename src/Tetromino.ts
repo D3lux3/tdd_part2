@@ -13,6 +13,7 @@ export class Tetromino {
     readonly rotatingShape: RotatingShape;
     readonly currentOrientation: number;
     readonly shape: string;
+    readonly symbol: string;
 
     constructor(maxOrientations: number, currentOrientation: number, shape: string, orientations?: RotatingShape[], coordinates?: Coordinate[]) {
         this.rotatingShape = new RotatingShape(shape);
@@ -21,6 +22,7 @@ export class Tetromino {
         this.maxOrientations = maxOrientations;
         this.orientations = orientations ? orientations : this.createOrientations(1, [this.rotatingShape]);
         this.currentOrientation = currentOrientation;
+        this.symbol = this.parseSymbol();
     }
 
     private createOrientations(i: number, shapes: RotatingShape[]): RotatingShape[] {
@@ -29,6 +31,12 @@ export class Tetromino {
 
     private scaleOrientation(orientation: number) {
         return (this.maxOrientations + orientation) % this.maxOrientations;
+    }
+
+    private parseSymbol(): string {
+        const pattern = new RegExp('([\\w+])', 'gm');
+        const match = pattern.exec(this.shape);
+        return match ? match[0] : "X";
     }
 
     setCoordinates(coordinates: Coordinate[]): Tetromino {

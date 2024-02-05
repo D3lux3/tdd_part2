@@ -57,10 +57,13 @@ export class Board {
 
   toString() {
     const emptyBoard = (".".repeat(this.width) + "\n").repeat(this.height);
-    return [...this.tetrominos.values()].reduce((b, block) => {
-      const { x, y } = block.coordinates[0];
-      const blockIndexOnBoard = (y * (this.width + 1)) + x;
-      return b.substring(0, blockIndexOnBoard) + `${block.shape}` + b.substring(blockIndexOnBoard + 1);
-    }, emptyBoard);
+    const boardArray = emptyBoard.split('');
+    for (const block of this.tetrominos.values()) {
+      for (const { x, y } of block.coordinates) {
+        const blockIndexOnBoard = (y * (this.width + 1)) + x;
+        boardArray[blockIndexOnBoard] = block.symbol;
+      }
+    }
+    return boardArray.join("");
   }
 }
