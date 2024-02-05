@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Tetromino } from './Tetromino';
 
 interface Block {
-  block: string,
+  block: Tetromino,
   location: {
     x: number,
     y: number
@@ -54,7 +54,7 @@ export class Board {
       const boardMiddlePoint = Math.floor(this.width / 2);
       const blockId = uuidv4();
       const converted = this.tetrominoConverter(block);
-      this.blocks.set(blockId, { block: converted.shape.shape, location: { x: boardMiddlePoint, y: 0 } })
+      this.blocks.set(blockId, { block: converted, location: { x: boardMiddlePoint, y: 0 } })
       this.fallingBlockId = blockId;
       return;
     }
@@ -66,7 +66,7 @@ export class Board {
     return [...this.blocks.values()].reduce((b, block) => {
       const { x, y } = block.location;
       const blockIndexOnBoard = (y * (this.width + 1)) + x;
-      return b.substring(0, blockIndexOnBoard) + `${block.block}` + b.substring(blockIndexOnBoard + 1);
+      return b.substring(0, blockIndexOnBoard) + `${block.block.shape}` + b.substring(blockIndexOnBoard + 1);
     }, emptyBoard);
   }
 }
