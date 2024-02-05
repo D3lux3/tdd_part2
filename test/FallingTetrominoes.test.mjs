@@ -1,4 +1,4 @@
-/*
+
 import { beforeEach, describe, test } from "vitest";
 import { expect } from "chai";
 import { Board } from "../src/Board.mjs";
@@ -59,4 +59,3 @@ describe("Falling tetrominoes", () => {
     );
   });
 });
-*/
