@@ -49,10 +49,10 @@ export class Board {
 
   drop(block: string | Tetromino): void {
     if (!this.fallingBlockId) {
-      const boardMiddlePoint = Math.floor(this.width / 2);
       const blockId = uuidv4();
-      const converted = this.tetrominoConverter(block);
-      this.blocks.set(blockId, { block: converted, location: [{ x: boardMiddlePoint, y: 0 }] })
+      const startingCoordinates: Coordinate[] = [{ x: Math.floor(this.width / 2), y: 0 }]
+      const converted = this.tetrominoConverter(block).setCoordinates(startingCoordinates);
+      this.blocks.set(blockId, { block: converted, location: startingCoordinates })
       this.fallingBlockId = blockId;
       return;
     }

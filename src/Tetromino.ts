@@ -31,6 +31,10 @@ export class Tetromino {
         return (this.maxOrientations + orientation) % this.maxOrientations;
     }
 
+    setCoordinates(coordinates: Coordinate[]): Tetromino {
+        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, coordinates);
+    }
+
     fallDown(): Tetromino {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, this.coordinates.map(({ x, y: oldY }) => ({ x, y: oldY + 1 })));
     }
