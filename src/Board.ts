@@ -18,6 +18,12 @@ export class Board {
     return y < this.height && [...this.blocks.values()].map((block) => block.coordinates[0]).filter(({ x: blockX, y: blockY }) => blockX === x && blockY === y).length === 0;
   }
 
+  private isSquareValid2(tetromino: Tetromino): boolean {
+    const union = [...[...this.blocks.values()].map((block) => block.coordinates).flat(), ...tetromino.coordinates]
+    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height).length === 0 &&
+      new Set(union).size === union.length;
+  }
+
   getFallingBlock(): Tetromino | undefined {
     return this.fallingBlockId ? this.blocks.get(this.fallingBlockId) : undefined;
   }
@@ -26,8 +32,8 @@ export class Board {
     const fallingBlock = this.getFallingBlock();
     if (fallingBlock) {
       const newYCoord = fallingBlock.coordinates[0].y + 1;
-      if (this.isSquareValid(fallingBlock.coordinates[0].x, newYCoord)) {
-        this.blocks.set((this.fallingBlockId as string), fallingBlock.setCoordinates([{ x: fallingBlock.coordinates[0].x, y: newYCoord }]))
+      if (this.isSquareValid(fallingBlock.coordinates[0].x, newYCoord) && this.isSquareValid2(fallingBlock.fallDown())) {
+        this.blocks.set((this.fallingBlockId as string), fallingBlock.fallDown())
         return;
       }
       delete this.fallingBlockId;
