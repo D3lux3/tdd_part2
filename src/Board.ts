@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { Tetromino } from './Tetromino';
 
 interface Block {
   block: string,
@@ -44,11 +45,16 @@ export class Board {
     return this.fallingBlockId !== undefined;
   }
 
-  drop(block: string): void {
+  private tetrominoConverter(block: string | Tetromino) {
+    return typeof (block) === "string" ? new Tetromino(4, 1, block) : block;
+  }
+
+  drop(block: string | Tetromino): void {
     if (!this.fallingBlockId) {
       const boardMiddlePoint = Math.floor(this.width / 2);
       const blockId = uuidv4();
-      this.blocks.set(blockId, { block, location: { x: boardMiddlePoint, y: 0 } })
+      const converted = this.tetrominoConverter(block);
+      this.blocks.set(blockId, { block: converted.shape.shape, location: { x: boardMiddlePoint, y: 0 } })
       this.fallingBlockId = blockId;
       return;
     }
