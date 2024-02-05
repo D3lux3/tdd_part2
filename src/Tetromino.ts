@@ -18,7 +18,7 @@ export class Tetromino {
     constructor(maxOrientations: number, currentOrientation: number, shape: string, orientations?: RotatingShape[], coordinates?: Coordinate[]) {
         this.rotatingShape = new RotatingShape(shape);
         this.shape = this.rotatingShape.shape;
-        this.coordinates = coordinates ? coordinates : [];
+        this.coordinates = coordinates ? coordinates : this.parseCoordinates();
         this.maxOrientations = maxOrientations;
         this.orientations = orientations ? orientations : this.createOrientations(1, [this.rotatingShape]);
         this.currentOrientation = currentOrientation;
@@ -37,6 +37,29 @@ export class Tetromino {
         const pattern = new RegExp('([\\w+])', 'gm');
         const match = pattern.exec(this.shape);
         return match ? match[0] : "X";
+    }
+
+    moveToMiddle(width: number) {
+        const maxX = Math.max(...this.coordinates.map(coord => coord.x));
+        const boardWidth = Math.floor(width / 2);
+        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, this.coordinates.map(({ x: oldX, y }) => ({ x: oldX + (boardWidth - maxX), y })));
+    }
+
+    parseCoordinates(): Coordinate[] {
+        const pattern = new RegExp('([\\w+])', 'gm');
+        const splitted = this.shape.split("\n");
+        const coordinates: Coordinate[] = [];
+        splitted.forEach((line, index) => {
+            let match;
+            while ((match = pattern.exec(line)) !== null) {
+                const coordinate: Coordinate = {
+                    x: match.index,
+                    y: index
+                };
+                coordinates.push(coordinate);
+            }
+        })
+        return coordinates;
     }
 
     setCoordinates(coordinates: Coordinate[]): Tetromino {

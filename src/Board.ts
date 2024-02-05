@@ -39,16 +39,15 @@ export class Board {
     return this.fallingBlockId !== undefined;
   }
 
-  private toTetromino(block: string | Tetromino, coordinates: Coordinate[]) {
-    return typeof (block) === "string" ? new Tetromino(4, 1, block, undefined, coordinates) : block;
+  private toTetromino(block: string | Tetromino) {
+    return typeof (block) === "string" ? new Tetromino(4, 1, block, undefined) : block;
   }
 
   drop(block: string | Tetromino): void {
     if (!this.fallingBlockId) {
       const blockId = uuidv4();
-      const startingCoordinates: Coordinate[] = [{ x: Math.floor(this.width / 2), y: 0 }]
-      const converted = this.toTetromino(block, startingCoordinates);
-      this.tetrominos.set(blockId, converted)
+      const converted = this.toTetromino(block).moveToMiddle(this.width);
+      this.tetrominos.set(blockId, converted);
       this.fallingBlockId = blockId;
       return;
     }
