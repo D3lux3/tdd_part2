@@ -27,8 +27,9 @@ export class Board {
   tick(): void {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
-      if (this.isSquareValid(fallingBlock.fallDown())) {
-        this.tetrominos.set((this.fallingBlockId as string), fallingBlock.fallDown())
+      const falledBlock = fallingBlock.fallDown();
+      if (this.isSquareValid(falledBlock)) {
+        this.tetrominos.set((this.fallingBlockId as string), falledBlock)
         return;
       }
       delete this.fallingBlockId;
@@ -46,6 +47,7 @@ export class Board {
   drop(block: string | Tetromino): void {
     if (!this.fallingBlockId) {
       const blockId = uuidv4();
+      const startingCoordinates: Coordinate[] = [{ x: Math.floor(this.width / 2), y: 0 }]
       const converted = this.toTetromino(block).moveToMiddle(this.width);
       this.tetrominos.set(blockId, converted);
       this.fallingBlockId = blockId;
