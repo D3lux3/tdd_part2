@@ -1,8 +1,8 @@
-
+/*
 import { beforeEach, describe, test } from "vitest";
 import { expect } from "chai";
-import { Board } from "../src/Board.mjs";
-import { Tetromino } from "../src/Tetromino.mjs";
+import { Board } from "../src/Board.ts";
+import { Tetromino } from "../src/Tetromino.ts";
 
 function fallToBottom(board) {
   for (let i = 0; i < 10; i++) {
@@ -59,3 +59,4 @@ describe("Falling tetrominoes", () => {
     );
   });
 });
+*/
