@@ -14,10 +14,12 @@ export class Board {
     this.tetrominos = new Map();
   }
 
+
   private isSquareValid(tetromino: Tetromino): boolean {
-    const yCoordinates = [...this.tetrominos.values()].map((block) => block.coordinates).flat().map((coordinate) => coordinate.y)
-    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height).length === 0 &&
-      Math.max(...yCoordinates) !== Math.max(...tetromino.coordinates.map(coordinate => coordinate.y));
+    const filtered = new Map([...this.tetrominos].filter(([k, _]) => k != this.fallingBlockId));
+    const filteredCoordinates = [...filtered.values()].map(val => val.coordinates).flat();
+    const union = [...filteredCoordinates, ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
+    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height).length === 0 && new Set(union).size === union.length
   }
 
   getFallingTetromino(): Tetromino | undefined {
