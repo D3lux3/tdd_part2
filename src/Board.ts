@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Tetromino } from './Tetromino';
-import { Coordinate } from './types';
 
 export class Board {
   width: number;
@@ -13,7 +12,6 @@ export class Board {
     this.height = height;
     this.tetrominos = new Map();
   }
-
 
   private isSquareValid(tetromino: Tetromino): boolean {
     const filtered = new Map([...this.tetrominos].filter(([k, _]) => k != this.fallingBlockId));
@@ -43,13 +41,12 @@ export class Board {
   }
 
   private toTetromino(block: string | Tetromino) {
-    return typeof (block) === "string" ? new Tetromino(4, 1, block, undefined) : block;
+    return typeof (block) === "string" ? new Tetromino(4, 1, block) : block;
   }
 
   drop(block: string | Tetromino): void {
     if (!this.fallingBlockId) {
       const blockId = uuidv4();
-      const startingCoordinates: Coordinate[] = [{ x: Math.floor(this.width / 2), y: 0 }]
       const converted = this.toTetromino(block).moveToMiddle(this.width);
       this.tetrominos.set(blockId, converted);
       this.fallingBlockId = blockId;
