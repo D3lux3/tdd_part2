@@ -17,14 +17,16 @@ export class Board {
     const filtered = new Map([...this.tetrominos].filter(([k, _]) => k != this.fallingBlockId));
     const filteredCoordinates = [...filtered.values()].map(val => val.coordinates).flat();
     const union = [...filteredCoordinates, ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
-    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height).length === 0 && new Set(union).size === union.length
+    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.x < 0).length === 0 && new Set(union).size === union.length
   }
 
   moveFallingToLeft(): void {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
       const movedBlockToLeft = fallingBlock.moveToLeft();
-      this.tetrominos.set((this.fallingBlockId as string), movedBlockToLeft)
+      if (this.isSquareValid(movedBlockToLeft)) {
+        this.tetrominos.set((this.fallingBlockId as string), movedBlockToLeft);
+      }
     }
   }
 
