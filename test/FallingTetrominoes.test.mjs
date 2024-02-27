@@ -22,6 +22,12 @@ function moveToDownOfBoard(board) {
   }
 }
 
+function moveToRightOfBoard(board) {
+  for (let i = 0; i < 10; i++) {
+    board.moveFallingToRight();
+  }
+}
+
 describe("Falling tetrominoes", () => {
   let board;
   beforeEach(() => {
@@ -115,11 +121,7 @@ describe("Falling tetrominoes", () => {
 
   test("cannot be moved left over board", () => {
     board.drop(Tetromino.T_SHAPE);
-    board.moveFallingToLeft();
-    board.moveFallingToLeft();
-    board.moveFallingToLeft();
-    board.moveFallingToLeft();
-
+    moveToLeftOfBoard(board);
     expect(board.toString()).to.equalShape(
       `.T........
        TTT.......
@@ -132,12 +134,7 @@ describe("Falling tetrominoes", () => {
 
   test("cannot be moved right over board", () => {
     board.drop(Tetromino.T_SHAPE);
-    board.moveFallingToRight();
-    board.moveFallingToRight();
-    board.moveFallingToRight();
-    board.moveFallingToRight();
-    board.moveFallingToRight();
-    board.moveFallingToRight();
+    moveToRightOfBoard(board);
     expect(board.toString()).to.equalShape(
       `........T.
        .......TTT
