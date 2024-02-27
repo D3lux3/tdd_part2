@@ -20,13 +20,18 @@ export class Board {
     return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.x < 0 || coordinate.x >= this.width).length === 0 && new Set(union).size === union.length
   }
 
+  private moveFalling(movedBlock: Tetromino): boolean {
+    if (this.isSquareValid(movedBlock)) {
+      this.tetrominos.set((this.fallingBlockId as string), movedBlock);
+      return true;
+    }
+    return false;
+  }
   moveFallingToLeft(): void {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
       const movedBlockToLeft = fallingBlock.moveToLeft();
-      if (this.isSquareValid(movedBlockToLeft)) {
-        this.tetrominos.set((this.fallingBlockId as string), movedBlockToLeft);
-      }
+      this.moveFalling(movedBlockToLeft);
     }
   }
 
@@ -34,9 +39,7 @@ export class Board {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
       const movedBlockToRight = fallingBlock.moveToRight();
-      if (this.isSquareValid(movedBlockToRight)) {
-        this.tetrominos.set((this.fallingBlockId as string), movedBlockToRight)
-      }
+      this.moveFalling(movedBlockToRight);
     }
   }
 
@@ -44,10 +47,7 @@ export class Board {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
       const movedBlockToDown = fallingBlock.moveDown();
-      if (this.isSquareValid(movedBlockToDown)) {
-        this.tetrominos.set((this.fallingBlockId as string), movedBlockToDown);
-        return true;
-      }
+      return this.moveFalling(movedBlockToDown);
     }
     return false;
   }
