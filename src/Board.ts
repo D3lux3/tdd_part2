@@ -20,6 +20,14 @@ export class Board {
     return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height).length === 0 && new Set(union).size === union.length
   }
 
+  moveFallingToLeft(): void {
+    const fallingBlock = this.getFallingTetromino();
+    if (fallingBlock) {
+      const movedBlockToLeft = fallingBlock.moveToLeft();
+      this.tetrominos.set((this.fallingBlockId as string), movedBlockToLeft)
+    }
+  }
+
   getFallingTetromino(): Tetromino | undefined {
     return this.fallingBlockId ? this.tetrominos.get(this.fallingBlockId) : undefined;
   }
