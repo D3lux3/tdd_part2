@@ -10,6 +10,18 @@ function fallToBottom(board) {
   }
 }
 
+function moveToLeftOfBoard(board) {
+  for (let i = 0; i < 10; i++) {
+    board.moveFallingToLeft();
+  }
+}
+
+function moveToDownOfBoard(board) {
+  for (let i = 0; i < 10; i++) {
+    board.moveFallingToDown();
+  }
+}
+
 describe("Falling tetrominoes", () => {
   let board;
   beforeEach(() => {
@@ -133,6 +145,23 @@ describe("Falling tetrominoes", () => {
        ..........
        ..........
        ..........`
+    );
+  });
+
+  test("cannot be moved left through other blocks", () => {
+    board.drop(Tetromino.T_SHAPE);
+    moveToLeftOfBoard(board);
+    fallToBottom(board);
+    board.drop(Tetromino.T_SHAPE);
+    moveToDownOfBoard(board);
+    moveToLeftOfBoard(board);
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ..........
+       ..........
+       .T..T.....
+       TTTTTT....`
     );
   });
 });
