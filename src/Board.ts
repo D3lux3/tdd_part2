@@ -35,25 +35,26 @@ export class Board {
       this.tetrominos.set((this.fallingBlockId as string), movedBlockToRight)
     }
   }
-  moveFallingToDown(): void {
+
+  moveFallingToDown(): boolean {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
       const movedBlockToDown = fallingBlock.moveDown();
-      this.tetrominos.set((this.fallingBlockId as string), movedBlockToDown)
+      if (this.isSquareValid(movedBlockToDown)) {
+        this.tetrominos.set((this.fallingBlockId as string), movedBlockToDown);
+        return true;
+      }
     }
+    return false;
   }
+
   getFallingTetromino(): Tetromino | undefined {
     return this.fallingBlockId ? this.tetrominos.get(this.fallingBlockId) : undefined;
   }
 
   tick(): void {
-    const fallingBlock = this.getFallingTetromino();
-    if (fallingBlock) {
-      const falledBlock = fallingBlock.moveDown();
-      if (this.isSquareValid(falledBlock)) {
-        this.tetrominos.set((this.fallingBlockId as string), falledBlock)
-        return;
-      }
+    const isBlockFalling = this.moveFallingToDown();
+    if (!isBlockFalling) {
       delete this.fallingBlockId;
     }
   }
