@@ -42,7 +42,7 @@ export class Board {
   tick(): void {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
-      const falledBlock = fallingBlock.fallDown();
+      const falledBlock = fallingBlock.moveDown();
       if (this.isSquareValid(falledBlock)) {
         this.tetrominos.set((this.fallingBlockId as string), falledBlock)
         return;

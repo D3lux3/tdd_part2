@@ -73,7 +73,7 @@ export class Tetromino {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, coordinates);
     }
 
-    fallDown(): Tetromino {
+    moveDown(): Tetromino {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, this.coordinates.map(({ x, y: oldY }) => ({ x, y: oldY + 1 })));
     }
 
