@@ -28,6 +28,13 @@ export class Board {
     }
   }
 
+  moveFallingToRight(): void {
+    const fallingBlock = this.getFallingTetromino();
+    if (fallingBlock) {
+      const movedBlockToRight = fallingBlock.moveToRight();
+      this.tetrominos.set((this.fallingBlockId as string), movedBlockToRight)
+    }
+  }
   getFallingTetromino(): Tetromino | undefined {
     return this.fallingBlockId ? this.tetrominos.get(this.fallingBlockId) : undefined;
   }

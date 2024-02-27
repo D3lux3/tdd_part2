@@ -49,6 +49,9 @@ export class Tetromino {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX - 1), y })));
     }
 
+    moveToRight() {
+        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX + 1), y })));
+    }
     parseCoordinates(): Coordinate[] {
         const pattern = new RegExp('([\\w+])', 'gm');
         const splitted = this.shape.split("\n");
