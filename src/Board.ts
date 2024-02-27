@@ -27,6 +27,7 @@ export class Board {
     }
     return false;
   }
+
   moveFallingToLeft(): void {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
