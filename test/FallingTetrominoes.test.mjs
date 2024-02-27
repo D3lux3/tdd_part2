@@ -192,4 +192,19 @@ describe("Falling tetrominoes", () => {
     );
   });
 
+  test("it cannot be moved down through other blocks (will stop falling)", () => {
+    board.drop(Tetromino.T_SHAPE);
+    fallToBottom(board);
+    board.drop(Tetromino.T_SHAPE);
+    moveToDownOfBoard(board);
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ....T.....
+       ...TTT....
+       ....T.....
+       ...TTT....`
+    );
+  });
+
 });
