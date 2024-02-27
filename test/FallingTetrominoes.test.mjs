@@ -71,5 +71,19 @@ describe("Falling tetrominoes", () => {
        ..........
        ..........`
     );
-  })
+  });
+
+  test("moves to right by one unit when moving right", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.moveFallingToRight();
+
+    expect(board.toString()).to.equalShape(
+      `.....T....
+       ....TTT...
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
 });
