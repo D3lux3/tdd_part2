@@ -35,6 +35,13 @@ export class Board {
       this.tetrominos.set((this.fallingBlockId as string), movedBlockToRight)
     }
   }
+  moveFallingToDown(): void {
+    const fallingBlock = this.getFallingTetromino();
+    if (fallingBlock) {
+      const movedBlockToDown = fallingBlock.moveDown();
+      this.tetrominos.set((this.fallingBlockId as string), movedBlockToDown)
+    }
+  }
   getFallingTetromino(): Tetromino | undefined {
     return this.fallingBlockId ? this.tetrominos.get(this.fallingBlockId) : undefined;
   }
