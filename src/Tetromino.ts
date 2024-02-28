@@ -87,16 +87,21 @@ export class Tetromino {
     rotateRight(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation + 1);
         const pivot = this.getCenter();
-        const rotated = this.coordinates.map(({ x, y }) => ({
+        const rotatedCoordinates = this.coordinates.map(({ x, y }) => ({
             x: pivot.x + (pivot.y - y),
             y: pivot.y - (x - pivot.x)
         }));
-        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations, rotated);
+        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations, rotatedCoordinates);
     }
 
     rotateLeft(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation - 1);
-        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations);
+        const pivot = this.getCenter();
+        const rotatedCoordinates = this.coordinates.map(({ x, y }) => ({
+            x: pivot.x - (pivot.y - y),
+            y: pivot.y - (x - pivot.x)
+        }));
+        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations, rotatedCoordinates);
     }
 
     toString(): string {
