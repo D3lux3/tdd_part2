@@ -72,6 +72,13 @@ export class Board {
     return typeof (block) === "string" ? new Tetromino(4, 1, block) : block;
   }
 
+  rotateFallingBlock() {
+    const fallingBlock = this.getFallingTetromino();
+    if (fallingBlock) {
+      this.moveFalling(fallingBlock.rotateRight());
+    }
+  }
+
   drop(block: string | Tetromino): void {
     if (!this.fallingBlockId) {
       const blockId = uuidv4();

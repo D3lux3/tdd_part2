@@ -52,6 +52,7 @@ export class Tetromino {
     moveToRight() {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX + 1), y })));
     }
+
     parseCoordinates(): Coordinate[] {
         const pattern = new RegExp('([\\w+])', 'gm');
         const splitted = this.shape.split("\n");
@@ -77,16 +78,26 @@ export class Tetromino {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.orientations, this.coordinates.map(({ x, y: oldY }) => ({ x, y: oldY + 1 })));
     }
 
+    getCenter(): Coordinate {
+        const centerX = this.coordinates.reduce((sum, coord) => sum + coord.x, 0) / this.coordinates.length;
+        const centerY = this.coordinates.reduce((sum, coord) => sum + coord.y, 0) / this.coordinates.length;
+        return { x: Math.round(centerX), y: Math.round(centerY) };
+    }
+
     rotateRight(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation + 1);
-        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations);
+        const pivot = this.getCenter();
+        const rotated = this.coordinates.map(({ x, y }) => ({
+            x: pivot.x + (pivot.y - y),
+            y: pivot.y - (x - pivot.x)
+        }));
+        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations, rotated);
     }
 
     rotateLeft(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation - 1);
         return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations);
     }
-
 
     toString(): string {
         return this.rotatingShape.toString();
