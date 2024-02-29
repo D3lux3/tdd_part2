@@ -267,4 +267,20 @@ describe("Falling tetrominoes", () => {
     );
   });
 
+  test("performs wallkick if against left wall", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateFallingBlockRight();
+    moveToLeftOfBoard(board);
+    board.rotateFallingBlockRight();
+
+    expect(board.toString()).to.equalShape(
+      `TTT.......
+       .T........
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
 });
