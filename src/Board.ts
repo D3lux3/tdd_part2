@@ -88,7 +88,13 @@ export class Board {
   rotateFallingBlockLeft() {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
-      this.moveFalling(fallingBlock.rotateLeft());
+      if (!this.moveFalling(fallingBlock.rotateLeft())) {
+        const movedLeftAndRotated = fallingBlock.moveToLeft().rotateLeft();
+        if (!this.moveFalling(movedLeftAndRotated)) {
+          const movedRightAndRotated = fallingBlock.moveToRight().rotateLeft();
+          this.moveFalling(movedRightAndRotated);
+        }
+      }
     }
   }
 
