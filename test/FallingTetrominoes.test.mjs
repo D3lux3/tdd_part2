@@ -251,4 +251,20 @@ describe("Falling tetrominoes", () => {
     );
   });
 
+  test("cannot be rotated left when no space", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateFallingBlockLeft();
+    moveToRightOfBoard(board);
+    board.rotateFallingBlockLeft();
+
+    expect(board.toString()).to.equalShape(
+      `.........T
+       ........TT
+       .........T
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
 });
