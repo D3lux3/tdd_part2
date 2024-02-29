@@ -89,7 +89,7 @@ export class Tetromino {
         const pivot = this.getCenter();
         const rotatedCoordinates = this.coordinates.map(({ x, y }) => ({
             x: pivot.x + (pivot.y - y),
-            y: pivot.y - (x - pivot.x)
+            y: pivot.y + (x - pivot.x)
         }));
         return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.orientations, rotatedCoordinates);
     }
