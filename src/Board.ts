@@ -17,7 +17,7 @@ export class Board {
     const filtered = new Map([...this.tetrominos].filter(([k, _]) => k != this.fallingBlockId));
     const filteredCoordinates = [...filtered.values()].map(val => val.coordinates).flat();
     const union = [...filteredCoordinates, ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
-    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.x < 0 || coordinate.x >= this.width).length === 0 && new Set(union).size === union.length
+    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.y < 0 || coordinate.x < 0 || coordinate.x >= this.width).length === 0 && new Set(union).size === union.length
   }
 
   private moveFalling(movedBlock: Tetromino): boolean {
@@ -75,7 +75,13 @@ export class Board {
   rotateFallingBlockRight() {
     const fallingBlock = this.getFallingTetromino();
     if (fallingBlock) {
-      this.moveFalling(fallingBlock.rotateRight());
+      if (!this.moveFalling(fallingBlock.rotateRight())) {
+        const movedLeftAndRotated = fallingBlock.moveToLeft().rotateRight();
+        if (!this.moveFalling(movedLeftAndRotated)) {
+          const movedRightAndRotated = fallingBlock.moveToRight().rotateRight();
+          this.moveFalling(movedRightAndRotated);
+        }
+      }
     }
   }
 
