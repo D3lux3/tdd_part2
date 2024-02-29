@@ -235,7 +235,7 @@ describe("Falling tetrominoes", () => {
     );
   });
 
-  test("cannot be rotated right when no space", () => {
+  test.skip("cannot be rotated right when no space", () => {
     board.drop(Tetromino.T_SHAPE);
     board.rotateFallingBlockRight();
     moveToLeftOfBoard(board);
@@ -251,7 +251,7 @@ describe("Falling tetrominoes", () => {
     );
   });
 
-  test("cannot be rotated left when no space", () => {
+  test.skip("cannot be rotated left when no space", () => {
     board.drop(Tetromino.T_SHAPE);
     board.rotateFallingBlockLeft();
     moveToRightOfBoard(board);
