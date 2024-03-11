@@ -5,8 +5,8 @@ import { Coordinate } from "./types";
 export class Tetromino {
 
     static readonly T_SHAPE = new Tetromino(4, 0, `.T.\nTTT\n...`, undefined, Shape.T_SHAPE.old_orientations[0], "T");
-    static readonly I_SHAPE = new Tetromino(2, 0, `.....\n.....\nIIII.\n.....\n.....`);
-    static readonly O_SHAPE = new Tetromino(1, 1, `.OO\n.OO\n...`);
+    static readonly I_SHAPE = new Tetromino(2, 0, `.....\n.....\nIIII.\n.....\n.....`, undefined, Shape.I_SHAPE.old_orientations[0], "I");
+    static readonly O_SHAPE = new Tetromino(1, 1, `.OO\n.OO\n...`, undefined, Shape.O_SHAPE.orientations[0], "O");
 
     readonly coordinates: Coordinate[];
     readonly orientations: RotatingShape[];
