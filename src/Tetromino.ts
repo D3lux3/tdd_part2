@@ -1,9 +1,10 @@
 import { RotatingShape } from "./RotatingShape";
+import { Shape } from "./Shape";
 import { Coordinate } from "./types";
 
 export class Tetromino {
 
-    static readonly T_SHAPE = new Tetromino(4, 0, `.T.\nTTT\n...`);
+    static readonly T_SHAPE = new Tetromino(4, 0, `.T.\nTTT\n...`, undefined, Shape.T_SHAPE.old_orientations[0], "T");
     static readonly I_SHAPE = new Tetromino(2, 0, `.....\n.....\nIIII.\n.....\n.....`);
     static readonly O_SHAPE = new Tetromino(1, 1, `.OO\n.OO\n...`);
 
@@ -15,14 +16,14 @@ export class Tetromino {
     readonly shape: string;
     readonly symbol: string;
 
-    constructor(maxOrientations: number, currentOrientation: number, shape: string, orientations?: RotatingShape[], coordinates?: Coordinate[]) {
+    constructor(maxOrientations: number, currentOrientation: number, shape: string, orientations?: RotatingShape[], coordinates?: Coordinate[], symbol?: string) {
         this.rotatingShape = new RotatingShape(shape);
         this.shape = this.rotatingShape.shape;
         this.coordinates = coordinates ? coordinates : this.parseCoordinates();
         this.maxOrientations = maxOrientations;
         this.orientations = orientations ? orientations : this.createOrientations(1, [this.rotatingShape]);
         this.currentOrientation = currentOrientation;
-        this.symbol = this.parseSymbol();
+        this.symbol = symbol ? symbol : this.parseSymbol();
     }
 
     private createOrientations(i: number, shapes: RotatingShape[]): RotatingShape[] {
