@@ -19,7 +19,7 @@ export class Tetromino {
     constructor(maxOrientations: number, currentOrientation: number, shape: string, orientations?: RotatingShape[], coordinates?: Coordinate[], symbol?: string) {
         this.rotatingShape = new RotatingShape(shape);
         this.shape = this.rotatingShape.shape;
-        this.coordinates = coordinates ? coordinates : this.parseCoordinates();
+        this.coordinates = coordinates ? coordinates : [{ x: 0, y: 0 }];
         this.maxOrientations = maxOrientations;
         this.orientations = orientations ? orientations : this.createOrientations(1, [this.rotatingShape]);
         this.currentOrientation = currentOrientation;
