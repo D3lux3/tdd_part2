@@ -34,12 +34,6 @@ export class Tetromino {
         return (this.maxOrientations + orientation) % this.maxOrientations;
     }
 
-    private parseSymbol(): string {
-        const pattern = new RegExp('([\\w+])', 'gm');
-        const match = pattern.exec(this.shape);
-        return match ? match[0] : "X";
-    }
-
     moveToMiddle(width: number) {
         const maxX = Math.max(...this.coordinates.map(coord => coord.x));
         const boardWidth = Math.floor(width / 2);
