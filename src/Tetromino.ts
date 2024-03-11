@@ -48,23 +48,6 @@ export class Tetromino {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.symbol, this.orientations, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX + 1), y })));
     }
 
-    parseCoordinates(): Coordinate[] {
-        const pattern = new RegExp('([\\w+])', 'gm');
-        const splitted = this.shape.split("\n");
-        const coordinates: Coordinate[] = [];
-        splitted.forEach((line, index) => {
-            let match;
-            while ((match = pattern.exec(line)) !== null) {
-                const coordinate: Coordinate = {
-                    x: match.index,
-                    y: index
-                };
-                coordinates.push(coordinate);
-            }
-        })
-        return coordinates;
-    }
-
     setCoordinates(coordinates: Coordinate[]): Tetromino {
         return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.symbol, this.orientations, coordinates);
     }
