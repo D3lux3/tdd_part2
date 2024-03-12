@@ -3,9 +3,9 @@ import { Coordinate } from "./types";
 
 export class Tetromino {
 
-    static readonly T_SHAPE = new Tetromino(4, 0, Shape.T_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.T_SHAPE.new_orientations));
-    static readonly I_SHAPE = new Tetromino(2, 0, Shape.I_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.I_SHAPE.new_orientations));
-    static readonly O_SHAPE = new Tetromino(1, 0, Shape.O_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.O_SHAPE.new_orientations));
+    static readonly T_SHAPE = new Tetromino(4, 0, Shape.T_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.T_SHAPE.orientations));
+    static readonly I_SHAPE = new Tetromino(2, 0, Shape.I_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.I_SHAPE.orientations));
+    static readonly O_SHAPE = new Tetromino(1, 0, Shape.O_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.O_SHAPE.orientations));
 
     readonly coordinates: Coordinate[];
     readonly orientations: Coordinate[][];
