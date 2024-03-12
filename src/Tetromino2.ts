@@ -8,7 +8,7 @@ export class Tetromino2 {
     static readonly O_SHAPE = new Tetromino2(1, 1, Shape.O_SHAPE.symbol, Shape.O_SHAPE.new_orientations[0], undefined, Object.values(Shape.O_SHAPE.new_orientations));
 
     readonly coordinates: Coordinate[];
-    readonly orientations2: Coordinate[][];
+    readonly orientations: Coordinate[][];
     readonly maxOrientations: number;
     readonly origin: Coordinate;
     readonly currentOrientation: number;
@@ -17,7 +17,7 @@ export class Tetromino2 {
 
     constructor(maxOrientations: number, currentOrientation: number, symbol: string, coordinates: Coordinate[], origin?: Coordinate, orientations2?: Coordinate[][]) {
         this.coordinates = coordinates;
-        this.orientations2 = orientations2 ?? [];
+        this.orientations = orientations2 ?? [];
         this.maxOrientations = maxOrientations;
         this.currentOrientation = currentOrientation;
         this.symbol = symbol;
@@ -63,12 +63,12 @@ export class Tetromino2 {
 
     rotateRight(): Tetromino2 {
         const scaled = this.scaleOrientation(this.currentOrientation + 1);
-        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.orientations2[scaled], this.origin, this.orientations2);
+        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.orientations[scaled], this.origin, this.orientations);
     }
 
     rotateLeft(): Tetromino2 {
         const scaled = this.scaleOrientation(this.currentOrientation - 1);
-        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.orientations2[scaled], this.origin, this.orientations2);
+        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.orientations[scaled], this.origin, this.orientations);
     }
 
     toString(): string {
