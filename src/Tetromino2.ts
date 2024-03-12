@@ -5,7 +5,7 @@ import { Coordinate } from "./types";
 export class Tetromino2 {
 
     static readonly T_SHAPE = new Tetromino2(4, 0, Shape.T_SHAPE.symbol, Shape.T_SHAPE.new_orientations[0], undefined, undefined, Object.values(Shape.T_SHAPE.new_orientations));
-    static readonly I_SHAPE = new Tetromino2(2, 0, Shape.I_SHAPE.symbol, Shape.I_SHAPE.old_orientations[0]);
+    static readonly I_SHAPE = new Tetromino2(2, 0, Shape.I_SHAPE.symbol, Shape.I_SHAPE.new_orientations[0], undefined, undefined, Object.values(Shape.I_SHAPE.new_orientations));
     static readonly O_SHAPE = new Tetromino2(1, 1, Shape.O_SHAPE.symbol, Shape.O_SHAPE.orientations[0]);
 
     readonly coordinates: Coordinate[];
