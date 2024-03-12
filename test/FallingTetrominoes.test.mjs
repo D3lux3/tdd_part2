@@ -333,4 +333,27 @@ describe("Falling tetrominoes", () => {
     );
   });
 
+  test("bottom row gets cleared if full", () => {
+    board.drop(Tetromino.I_SHAPE);
+    moveToLeftOfBoard(board);
+    fallToBottom(board);
+
+    board.drop(Tetromino.I_SHAPE);
+    board.moveFallingToRight();
+    fallToBottom(board);
+
+    board.drop(Tetromino.O_SHAPE);
+    moveToRightOfBoard(board);
+    fallToBottom(board);
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ..........
+       ..........
+       ..........
+       ........OO`
+    );
+  });
+
 });
