@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Tetromino } from './Tetromino';
+import { Tetromino2 } from './Tetromino2';
 
-export class Board {
+export class Board2 {
   width: number;
   height: number;
-  tetrominos: Map<string, Tetromino>;
+  tetrominos: Map<string, Tetromino2>;
   fallingBlockId: string | undefined
 
   constructor(width: number, height: number) {
@@ -13,14 +13,14 @@ export class Board {
     this.tetrominos = new Map();
   }
 
-  private isSquareValid(tetromino: Tetromino): boolean {
+  private isSquareValid(tetromino: Tetromino2): boolean {
     const filtered = new Map([...this.tetrominos].filter(([k, _]) => k != this.fallingBlockId));
     const filteredCoordinates = [...filtered.values()].map(val => val.coordinates).flat();
     const union = [...filteredCoordinates, ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
     return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.y < 0 || coordinate.x < 0 || coordinate.x >= this.width).length === 0 && new Set(union).size === union.length
   }
 
-  private moveFalling(movedBlock: Tetromino): boolean {
+  private moveFalling(movedBlock: Tetromino2): boolean {
     if (this.isSquareValid(movedBlock)) {
       this.tetrominos.set((this.fallingBlockId as string), movedBlock);
       return true;
@@ -53,7 +53,7 @@ export class Board {
     return false;
   }
 
-  getFallingTetromino(): Tetromino | undefined {
+  getFallingTetromino(): Tetromino2 | undefined {
     return this.fallingBlockId ? this.tetrominos.get(this.fallingBlockId) : undefined;
   }
 
@@ -68,8 +68,8 @@ export class Board {
     return this.fallingBlockId !== undefined;
   }
 
-  private toTetromino(block: string | Tetromino) {
-    return typeof (block) === "string" ? new Tetromino(4, 1, block, block, [{ x: 0, y: 0 }]) : block;
+  private toTetromino(block: string | Tetromino2) {
+    return typeof (block) === "string" ? new Tetromino2(4, 0, block, { x: 0, y: 0 }, [[{ x: 2, y: 0 }]]) : block;
   }
 
   rotateFallingBlockRight() {
@@ -98,7 +98,7 @@ export class Board {
     }
   }
 
-  drop(block: string | Tetromino): void {
+  drop(block: string | Tetromino2): void {
     if (!this.fallingBlockId) {
       const blockId = uuidv4();
       const converted = this.toTetromino(block).moveToMiddle(this.width);

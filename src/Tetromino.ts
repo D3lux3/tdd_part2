@@ -1,33 +1,36 @@
-import { RotatingShape } from "./RotatingShape";
 import { Shape } from "./Shape";
 import { Coordinate } from "./types";
 
-export class Tetromino {
+export class Tetromino2 {
 
-    static readonly T_SHAPE = new Tetromino(4, 0, `.T.\nTTT\n...`, Shape.T_SHAPE.symbol, Shape.T_SHAPE.old_orientations[0]);
-    static readonly I_SHAPE = new Tetromino(2, 0, `.....\n.....\nIIII.\n.....\n.....`, Shape.I_SHAPE.symbol, Shape.I_SHAPE.old_orientations[0]);
-    static readonly O_SHAPE = new Tetromino(1, 1, `.OO\n.OO\n...`, Shape.O_SHAPE.symbol, Shape.O_SHAPE.old_orientations[0]);
+    static readonly T_SHAPE = new Tetromino2(4, 0, Shape.T_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.T_SHAPE.new_orientations));
+    static readonly I_SHAPE = new Tetromino2(2, 0, Shape.I_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.I_SHAPE.new_orientations));
+    static readonly O_SHAPE = new Tetromino2(1, 0, Shape.O_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.O_SHAPE.new_orientations));
 
     readonly coordinates: Coordinate[];
-    readonly orientations: RotatingShape[];
+    readonly orientations: Coordinate[][];
     readonly maxOrientations: number;
-    readonly rotatingShape: RotatingShape;
+    readonly origin: Coordinate;
     readonly currentOrientation: number;
-    readonly shape: string;
     readonly symbol: string;
 
-    constructor(maxOrientations: number, currentOrientation: number, shape: string, symbol: string, coordinates: Coordinate[], orientations?: RotatingShape[]) {
-        this.rotatingShape = new RotatingShape(shape);
-        this.shape = this.rotatingShape.shape;
-        this.coordinates = coordinates;
+    constructor(maxOrientations: number, currentOrientation: number, symbol: string, origin: Coordinate, orientations: Coordinate[][]) {
+        this.coordinates = orientations[currentOrientation].map(({ x, y }) => ({ x: x + origin.x, y: y + origin.y }));
+        this.orientations = orientations ?? [];
         this.maxOrientations = maxOrientations;
-        this.orientations = orientations ? orientations : this.createOrientations(1, [this.rotatingShape]);
         this.currentOrientation = currentOrientation;
         this.symbol = symbol;
+        this.origin = origin;
     }
 
-    private createOrientations(i: number, shapes: RotatingShape[]): RotatingShape[] {
-        return (i >= this.maxOrientations || i > 4) ? shapes : this.createOrientations(i + 1, [...shapes, (shapes.pop() as RotatingShape).rotateRight()])
+    private createShape() {
+        const emptyBoard = (".".repeat(4) + "\n").repeat(4);
+        const boardArray = emptyBoard.split('');
+        for (const { x, y } of this.coordinates) {
+            const blockIndexOnBoard = (y * (4 + 1)) + x;
+            boardArray[blockIndexOnBoard] = this.symbol;
+        }
+        return boardArray.join("");
     }
 
     private scaleOrientation(orientation: number) {
@@ -35,55 +38,34 @@ export class Tetromino {
     }
 
     moveToMiddle(width: number) {
-        const maxX = Math.max(...this.coordinates.map(coord => coord.x));
         const boardWidth = Math.floor(width / 2);
-        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: oldX + (boardWidth - maxX), y })), this.orientations);
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: (boardWidth - 2), y: 0 }, this.orientations);
     }
 
     moveToLeft() {
-        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX - 1), y })), this.orientations);
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x - 1, y: this.origin.y }, this.orientations);
     }
 
     moveToRight() {
-        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX + 1), y })), this.orientations);
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x + 1, y: this.origin.y }, this.orientations);
     }
 
-    setCoordinates(coordinates: Coordinate[]): Tetromino {
-        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.symbol, coordinates, this.orientations);
+    moveDown(): Tetromino2 {
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x, y: this.origin.y + 1 }, this.orientations);
     }
 
-    moveDown(): Tetromino {
-        return new Tetromino(this.maxOrientations, this.currentOrientation, this.shape, this.symbol, this.coordinates.map(({ x, y: oldY }) => ({ x, y: oldY + 1 })), this.orientations);
-    }
-
-    getCenter(): Coordinate {
-        const centerX = this.coordinates.reduce((sum, coord) => sum + coord.x, 0) / this.coordinates.length;
-        const centerY = this.coordinates.reduce((sum, coord) => sum + coord.y, 0) / this.coordinates.length;
-        return { x: Math.round(centerX), y: Math.round(centerY) };
-    }
-
-    rotateRight(): Tetromino {
+    rotateRight(): Tetromino2 {
         const scaled = this.scaleOrientation(this.currentOrientation + 1);
-        const pivot = this.getCenter();
-        const rotatedCoordinates = this.coordinates.map(({ x, y }) => ({
-            x: pivot.x + (pivot.y - y),
-            y: pivot.y + (x - pivot.x)
-        }));
-        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.symbol, rotatedCoordinates, this.orientations);
+        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.origin, this.orientations);
     }
 
-    rotateLeft(): Tetromino {
+    rotateLeft(): Tetromino2 {
         const scaled = this.scaleOrientation(this.currentOrientation - 1);
-        const pivot = this.getCenter();
-        const rotatedCoordinates = this.coordinates.map(({ x, y }) => ({
-            x: pivot.x - (pivot.y - y),
-            y: pivot.y - (x - pivot.x)
-        }));
-        return new Tetromino(this.maxOrientations, scaled, this.orientations[scaled].shape, this.symbol, rotatedCoordinates, this.orientations);
+        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.origin, this.orientations);
     }
 
     toString(): string {
-        return this.rotatingShape.toString();
+        return this.createShape();
     }
 }
 
