@@ -89,36 +89,37 @@ describe("The I shape Arika system", () => {
 });
 
 
-/*
-describe("The O shape", () => {
-const shape = Tetromino.O_SHAPE;
 
-test("initial orientation", () => {
-  expect(shape.toString()).to.equalShape(
-    `.OO
+describe("The O shape Arika system", () => {
+  const shape = Tetromino2.O_SHAPE;
+
+  test("initial orientation", () => {
+    expect(shape.toString()).to.equalShape(
+      `....
+       .OO.
+       .OO.
+       ....`
+    );
+  });
+
+  test.skip("cannot be rotated right/clockwise", () => {
+    expect(shape.rotateRight().toString()).to.equalShape(
+      `.OO
      .OO
      ...`
-  );
-});
+    );
+  });
 
-test("cannot be rotated right/clockwise", () => {
-  expect(shape.rotateRight().toString()).to.equalShape(
-    `.OO
+  test.skip("cannot be rotated left/counter-clockwise", () => {
+    expect(shape.rotateLeft().toString()).to.equalShape(
+      `.OO
      .OO
      ...`
-  );
+    );
+  });
+
+  test.skip("has 1 distinct orientations", () => {
+    expect(distinctOrientations(shape).size).to.equal(1);
+  });
 });
 
-test("cannot be rotated left/counter-clockwise", () => {
-  expect(shape.rotateLeft().toString()).to.equalShape(
-    `.OO
-     .OO
-     ...`
-  );
-});
-
-test("has 1 distinct orientations", () => {
-  expect(distinctOrientations(shape).size).to.equal(1);
-});
-});
-*/
