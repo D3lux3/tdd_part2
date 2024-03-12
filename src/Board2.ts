@@ -69,7 +69,7 @@ export class Board2 {
   }
 
   private toTetromino(block: string | Tetromino2) {
-    return typeof (block) === "string" ? new Tetromino2(4, 1, block, block, [{ x: 0, y: 0 }]) : block;
+    return typeof (block) === "string" ? new Tetromino2(4, 0, block, { x: 0, y: 0 }, [[{ x: 2, y: 0 }]]) : block;
   }
 
   rotateFallingBlockRight() {
