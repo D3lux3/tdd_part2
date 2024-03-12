@@ -238,10 +238,8 @@ describe("Falling tetrominoes", () => {
        ..........`
     );
   });
-});
-/*
   test.skip("cannot be rotated right when no space", () => {
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     board.rotateFallingBlockRight();
     moveToLeftOfBoard(board);
     board.rotateFallingBlockRight();
@@ -257,7 +255,7 @@ describe("Falling tetrominoes", () => {
   });
 
   test.skip("cannot be rotated left when no space", () => {
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     board.rotateFallingBlockLeft();
     moveToRightOfBoard(board);
     board.rotateFallingBlockLeft();
@@ -271,18 +269,17 @@ describe("Falling tetrominoes", () => {
        ..........`
     );
   });
-  
 
   test("performs wallkick if against left wall", () => {
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     board.rotateFallingBlockRight();
     moveToLeftOfBoard(board);
     board.rotateFallingBlockRight();
 
     expect(board.toString()).to.equalShape(
       `..........
-       TTT.......
        .T........
+       TTT.......
        ..........
        ..........
        ..........`
@@ -290,15 +287,15 @@ describe("Falling tetrominoes", () => {
   });
 
   test("performs wallkick if against right wall", () => {
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     board.rotateFallingBlockLeft();
     moveToRightOfBoard(board);
     board.rotateFallingBlockLeft();
 
     expect(board.toString()).to.equalShape(
       `..........
-       .......TTT
        ........T.
+       .......TTT
        ..........
        ..........
        ..........`
@@ -306,4 +303,3 @@ describe("Falling tetrominoes", () => {
   });
 
 });
-*/
