@@ -12,17 +12,15 @@ export class Tetromino2 {
     readonly maxOrientations: number;
     readonly origin: Coordinate;
     readonly currentOrientation: number;
-    readonly shape: string;
     readonly symbol: string;
 
-    constructor(maxOrientations: number, currentOrientation: number, symbol: string, coordinates: Coordinate[], origin: Coordinate, orientations2?: Coordinate[][]) {
+    constructor(maxOrientations: number, currentOrientation: number, symbol: string, coordinates: Coordinate[], origin: Coordinate, orientations?: Coordinate[][]) {
         this.coordinates = coordinates;
-        this.orientations = orientations2 ?? [];
+        this.orientations = orientations ?? [];
         this.maxOrientations = maxOrientations;
         this.currentOrientation = currentOrientation;
         this.symbol = symbol;
         this.origin = origin;
-        this.shape = this.createShape();
     }
 
     private createShape() {
@@ -72,7 +70,7 @@ export class Tetromino2 {
     }
 
     toString(): string {
-        return this.shape;
+        return this.createShape();
     }
 }
 
