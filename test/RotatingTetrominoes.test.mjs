@@ -1,6 +1,6 @@
 import { describe, test } from "vitest";
 import { expect } from "chai";
-import { Tetromino2 } from "../src/Tetromino2.ts";
+import { Tetromino } from "../src/Tetromino.ts";
 
 function distinctOrientations(shape) {
   const distinct = new Set();
@@ -16,7 +16,7 @@ function distinctOrientations(shape) {
 }
 
 describe("The T shape Arika system", () => {
-  const shape = Tetromino2.T_SHAPE;
+  const shape = Tetromino.T_SHAPE;
 
   test("initial Arika orientation", () => {
     expect(shape.toString()).to.equalShape(
@@ -54,7 +54,7 @@ describe("The T shape Arika system", () => {
 
 
 describe("The I shape Arika system", () => {
-  const shape = Tetromino2.I_SHAPE;
+  const shape = Tetromino.I_SHAPE;
 
   test("initial orientation", () => {
     expect(shape.toString()).to.equalShape(
@@ -91,7 +91,7 @@ describe("The I shape Arika system", () => {
 
 
 describe("The O shape Arika system", () => {
-  const shape = Tetromino2.O_SHAPE;
+  const shape = Tetromino.O_SHAPE;
 
   test("initial orientation", () => {
     expect(shape.toString()).to.equalShape(

@@ -1,11 +1,11 @@
 import { Shape } from "./Shape";
 import { Coordinate } from "./types";
 
-export class Tetromino2 {
+export class Tetromino {
 
-    static readonly T_SHAPE = new Tetromino2(4, 0, Shape.T_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.T_SHAPE.new_orientations));
-    static readonly I_SHAPE = new Tetromino2(2, 0, Shape.I_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.I_SHAPE.new_orientations));
-    static readonly O_SHAPE = new Tetromino2(1, 0, Shape.O_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.O_SHAPE.new_orientations));
+    static readonly T_SHAPE = new Tetromino(4, 0, Shape.T_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.T_SHAPE.new_orientations));
+    static readonly I_SHAPE = new Tetromino(2, 0, Shape.I_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.I_SHAPE.new_orientations));
+    static readonly O_SHAPE = new Tetromino(1, 0, Shape.O_SHAPE.symbol, { x: 0, y: 0 }, Object.values(Shape.O_SHAPE.new_orientations));
 
     readonly coordinates: Coordinate[];
     readonly orientations: Coordinate[][];
@@ -39,29 +39,29 @@ export class Tetromino2 {
 
     moveToMiddle(width: number) {
         const boardWidth = Math.floor(width / 2);
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: (boardWidth - 2), y: 0 }, this.orientations);
+        return new Tetromino(this.maxOrientations, this.currentOrientation, this.symbol, { x: (boardWidth - 2), y: 0 }, this.orientations);
     }
 
     moveToLeft() {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x - 1, y: this.origin.y }, this.orientations);
+        return new Tetromino(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x - 1, y: this.origin.y }, this.orientations);
     }
 
     moveToRight() {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x + 1, y: this.origin.y }, this.orientations);
+        return new Tetromino(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x + 1, y: this.origin.y }, this.orientations);
     }
 
-    moveDown(): Tetromino2 {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x, y: this.origin.y + 1 }, this.orientations);
+    moveDown(): Tetromino {
+        return new Tetromino(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x, y: this.origin.y + 1 }, this.orientations);
     }
 
-    rotateRight(): Tetromino2 {
+    rotateRight(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation + 1);
-        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.origin, this.orientations);
+        return new Tetromino(this.maxOrientations, scaled, this.symbol, this.origin, this.orientations);
     }
 
-    rotateLeft(): Tetromino2 {
+    rotateLeft(): Tetromino {
         const scaled = this.scaleOrientation(this.currentOrientation - 1);
-        return new Tetromino2(this.maxOrientations, scaled, this.symbol, this.origin, this.orientations);
+        return new Tetromino(this.maxOrientations, scaled, this.symbol, this.origin, this.orientations);
     }
 
     toString(): string {
