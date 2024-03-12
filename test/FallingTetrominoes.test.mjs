@@ -316,4 +316,21 @@ describe("Falling tetrominoes", () => {
        ..........`
     );
   });
+
+  test("I-shaped block performs wallkick if against right wall", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateFallingBlockRight();
+    moveToRightOfBoard(board);
+    board.rotateFallingBlockRight();
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ......IIII
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
 });
