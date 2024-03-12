@@ -86,11 +86,6 @@ export class Tetromino2 {
 
     rotateLeft(): Tetromino2 {
         const scaled = this.scaleOrientation(this.currentOrientation - 1);
-        const pivot = this.getCenter();
-        const rotatedCoordinates = this.coordinates.map(({ x, y }) => ({
-            x: pivot.x - (pivot.y - y),
-            y: pivot.y - (x - pivot.x)
-        }));
         return new Tetromino2(this.maxOrientations, scaled, '', this.symbol, this.orientations2[scaled], undefined, this.origin, this.orientations2);
     }
 
