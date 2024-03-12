@@ -47,11 +47,9 @@ describe("Falling tetrominoes", () => {
     );
   });
 
-});
 
-/*
   test("stop when they hit the bottom", () => {
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     fallToBottom(board);
 
     expect(board.toString()).to.equalShape(
@@ -59,41 +57,45 @@ describe("Falling tetrominoes", () => {
        ..........
        ..........
        ..........
-       ....T.....
-       ...TTT....`
+       ...TTT....
+       ....T.....`
     );
   });
 
   test("stop when they land on another block", () => {
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     fallToBottom(board);
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     fallToBottom(board);
 
     expect(board.toString()).to.equalShape(
       `..........
        ..........
-       ....T.....
        ...TTT....
        ....T.....
-       ...TTT....`
+       ...TTT....
+       ....T.....`
     );
   });
 
+
+
   test("moves to left by one unit when moving left", () => {
-    board.drop(Tetromino.T_SHAPE);
+    board.drop(Tetromino2.T_SHAPE);
     board.moveFallingToLeft();
 
     expect(board.toString()).to.equalShape(
-      `...T......
+      `..........
        ..TTT.....
-       ..........
+       ...T......
        ..........
        ..........
        ..........`
     );
   });
 
+});
+/*
   test("moves to right by one unit when moving right", () => {
     board.drop(Tetromino.T_SHAPE);
     board.moveFallingToRight();
