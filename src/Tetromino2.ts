@@ -12,18 +12,30 @@ export class Tetromino2 {
     readonly orientations: RotatingShape[];
     readonly maxOrientations: number;
     readonly rotatingShape: RotatingShape;
+    readonly origin: Coordinate;
     readonly currentOrientation: number;
     readonly shape: string;
     readonly symbol: string;
 
-    constructor(maxOrientations: number, currentOrientation: number, shape: string, symbol: string, coordinates: Coordinate[], orientations?: RotatingShape[]) {
+    constructor(maxOrientations: number, currentOrientation: number, shape: string, symbol: string, coordinates: Coordinate[], orientations?: RotatingShape[], origin?: Coordinate) {
         this.rotatingShape = new RotatingShape(shape);
-        this.shape = this.rotatingShape.shape;
         this.coordinates = coordinates;
         this.maxOrientations = maxOrientations;
         this.orientations = orientations ? orientations : this.createOrientations(1, [this.rotatingShape]);
         this.currentOrientation = currentOrientation;
         this.symbol = symbol;
+        this.origin = origin || { x: 0, y: 0 };
+        this.shape = this.createShape();
+    }
+
+    private createShape() {
+        const emptyBoard = (".".repeat(4) + "\n").repeat(4);
+        const boardArray = emptyBoard.split('');
+        for (const { x, y } of this.coordinates) {
+            const blockIndexOnBoard = (y * (4 + 1)) + x;
+            boardArray[blockIndexOnBoard] = this.symbol;
+        }
+        return boardArray.join("");
     }
 
     private createOrientations(i: number, shapes: RotatingShape[]): RotatingShape[] {
@@ -83,7 +95,7 @@ export class Tetromino2 {
     }
 
     toString(): string {
-        return this.rotatingShape.toString();
+        return this.shape;
     }
 }
 
