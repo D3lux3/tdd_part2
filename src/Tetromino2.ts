@@ -38,9 +38,8 @@ export class Tetromino2 {
     }
 
     moveToMiddle(width: number) {
-        const maxX = Math.max(...this.coordinates.map(coord => coord.x));
         const boardWidth = Math.floor(width / 2);
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: 0, y: 0 }, this.orientations);
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: (boardWidth - 2), y: 0 }, this.orientations);
     }
 
     moveToLeft() {
