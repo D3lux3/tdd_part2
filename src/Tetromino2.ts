@@ -5,7 +5,7 @@ export class Tetromino2 {
 
     static readonly T_SHAPE = new Tetromino2(4, 0, Shape.T_SHAPE.symbol, Shape.T_SHAPE.new_orientations[0], { x: 0, y: 0 }, Object.values(Shape.T_SHAPE.new_orientations));
     static readonly I_SHAPE = new Tetromino2(2, 0, Shape.I_SHAPE.symbol, Shape.I_SHAPE.new_orientations[0], { x: 0, y: 0 }, Object.values(Shape.I_SHAPE.new_orientations));
-    static readonly O_SHAPE = new Tetromino2(1, 1, Shape.O_SHAPE.symbol, Shape.O_SHAPE.new_orientations[0], { x: 0, y: 0 }, Object.values(Shape.O_SHAPE.new_orientations));
+    static readonly O_SHAPE = new Tetromino2(1, 0, Shape.O_SHAPE.symbol, Shape.O_SHAPE.new_orientations[0], { x: 0, y: 0 }, Object.values(Shape.O_SHAPE.new_orientations));
 
     readonly coordinates: Coordinate[];
     readonly orientations: Coordinate[][];
@@ -14,8 +14,8 @@ export class Tetromino2 {
     readonly currentOrientation: number;
     readonly symbol: string;
 
-    constructor(maxOrientations: number, currentOrientation: number, symbol: string, coordinates: Coordinate[], origin: Coordinate, orientations?: Coordinate[][]) {
-        this.coordinates = coordinates;
+    constructor(maxOrientations: number, currentOrientation: number, symbol: string, coordinates: Coordinate[], origin: Coordinate, orientations: Coordinate[][]) {
+        this.coordinates = orientations[currentOrientation].map(({ x, y }) => ({ x: x + origin.x, y: y + origin.y }));
         this.orientations = orientations ?? [];
         this.maxOrientations = maxOrientations;
         this.currentOrientation = currentOrientation;
@@ -40,23 +40,23 @@ export class Tetromino2 {
     moveToMiddle(width: number) {
         const maxX = Math.max(...this.coordinates.map(coord => coord.x));
         const boardWidth = Math.floor(width / 2);
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: oldX + (boardWidth - maxX), y })), { x: 0, y: 0 });
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: oldX + (boardWidth - maxX), y })), { x: 0, y: 0 }, this.orientations);
     }
 
     moveToLeft() {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX - 1), y })), { x: 0, y: 0 });
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX - 1), y })), { x: 0, y: 0 }, this.orientations);
     }
 
     moveToRight() {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX + 1), y })), { x: 0, y: 0 });
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x: oldX, y }) => ({ x: (oldX + 1), y })), { x: 0, y: 0 }, this.orientations);
     }
 
     setCoordinates(coordinates: Coordinate[]): Tetromino2 {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, coordinates, { x: 0, y: 0 });
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, coordinates, { x: 0, y: 0 }, this.orientations);
     }
 
     moveDown(): Tetromino2 {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x, y: oldY }) => ({ x, y: oldY + 1 })), { x: 0, y: 0 });
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, this.coordinates.map(({ x, y: oldY }) => ({ x, y: oldY + 1 })), { x: 0, y: 0 }, this.orientations);
     }
 
     rotateRight(): Tetromino2 {
