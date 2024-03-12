@@ -1,6 +1,6 @@
 import { beforeEach, describe, test } from "vitest";
 import { expect } from "chai";
-import { Board } from "../src/Board.ts";
+import { Board2 as Board } from "../src/Board2.ts";
 
 describe("Falling blocks", () => {
   let board;
@@ -48,7 +48,7 @@ describe("Falling blocks", () => {
   });
 
 
-  
+
   describe("When a block reaches the bottom", () => {
     beforeEach(() => {
       board.drop("X");
@@ -78,7 +78,7 @@ describe("Falling blocks", () => {
   });
 
 
-  
+
   describe("When a block lands on another block", () => {
     beforeEach(() => {
       board.drop("X");
