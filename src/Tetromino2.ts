@@ -47,7 +47,7 @@ export class Tetromino2 {
     }
 
     moveToRight() {
-        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: 0, y: 0 }, this.orientations);
+        return new Tetromino2(this.maxOrientations, this.currentOrientation, this.symbol, { x: this.origin.x + 1, y: this.origin.y }, this.orientations);
     }
 
     moveDown(): Tetromino2 {
