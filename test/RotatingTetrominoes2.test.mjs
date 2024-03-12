@@ -20,9 +20,9 @@ describe("The T shape", () => {
 
   test("initial Arika orientation", () => {
     expect(shape.toString()).to.equalShape(
-      `.T..
+      `....
        TTT.
-       ....
+       .T..
        ....`
     );
   });

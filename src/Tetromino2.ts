@@ -4,7 +4,7 @@ import { Coordinate } from "./types";
 
 export class Tetromino2 {
 
-    static readonly T_SHAPE = new Tetromino2(4, 0, `.T.\nTTT\n...`, Shape.T_SHAPE.symbol, Shape.T_SHAPE.old_orientations[0]);
+    static readonly T_SHAPE = new Tetromino2(4, 0, `....\nTTT.\n.T..\n....`, Shape.T_SHAPE.symbol, Shape.T_SHAPE.new_orientations[0]);
     static readonly I_SHAPE = new Tetromino2(2, 0, `.....\n.....\nIIII.\n.....\n.....`, Shape.I_SHAPE.symbol, Shape.I_SHAPE.old_orientations[0]);
     static readonly O_SHAPE = new Tetromino2(1, 1, `.OO\n.OO\n...`, Shape.O_SHAPE.symbol, Shape.O_SHAPE.orientations[0]);
 
