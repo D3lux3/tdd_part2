@@ -6,7 +6,7 @@ export class Tetromino {
 
     static readonly T_SHAPE = new Tetromino(4, 0, `.T.\nTTT\n...`, Shape.T_SHAPE.symbol, Shape.T_SHAPE.old_orientations[0]);
     static readonly I_SHAPE = new Tetromino(2, 0, `.....\n.....\nIIII.\n.....\n.....`, Shape.I_SHAPE.symbol, Shape.I_SHAPE.old_orientations[0]);
-    static readonly O_SHAPE = new Tetromino(1, 1, `.OO\n.OO\n...`, Shape.O_SHAPE.symbol, Shape.O_SHAPE.orientations[0]);
+    static readonly O_SHAPE = new Tetromino(1, 1, `.OO\n.OO\n...`, Shape.O_SHAPE.symbol, Shape.O_SHAPE.old_orientations[0]);
 
     readonly coordinates: Coordinate[];
     readonly orientations: RotatingShape[];
