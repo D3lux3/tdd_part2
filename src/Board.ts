@@ -5,14 +5,12 @@ import { Coordinate } from './types';
 export class Board {
   width: number;
   height: number;
-  tetrominos: Map<string, Tetromino>;
   blocksOnBoard: Map<Coordinate, string>;
   fallingBlock: Tetromino | undefined;
 
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
-    this.tetrominos = new Map();
     this.blocksOnBoard = new Map();
   }
 
@@ -108,7 +106,6 @@ export class Board {
     if (!this.fallingBlock) {
       const blockId = uuidv4();
       const converted = this.toTetromino(block).moveToMiddle(this.width);
-      this.tetrominos.set(blockId, converted);
       this.fallingBlock = converted;
       return;
     }
