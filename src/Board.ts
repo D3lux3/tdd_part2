@@ -58,17 +58,21 @@ export class Board {
   tick(): void {
     const isBlockFalling = this.moveFallingToDown();
     if (!isBlockFalling) {
-      if (this.fallingBlock) {
-        const symbol = this.fallingBlock.symbol;
-        const fallingCoordinates = new Map(this.fallingBlock.coordinates.map(coord => [coord, symbol]));
-        this.blocksOnBoard = new Map([...this.blocksOnBoard, ...fallingCoordinates])
-        delete this.fallingBlock;
-      }
+      this.addFallingToBlocksOnBoard();
     }
   }
 
   hasFalling(): boolean {
     return Boolean(this.fallingBlock);
+  }
+
+  private addFallingToBlocksOnBoard() {
+    if (this.fallingBlock) {
+      const symbol = this.fallingBlock.symbol;
+      const fallingCoordinates = new Map(this.fallingBlock.coordinates.map(coord => [coord, symbol]));
+      this.blocksOnBoard = new Map([...this.blocksOnBoard, ...fallingCoordinates])
+      delete this.fallingBlock;
+    }
   }
 
   private toTetromino(block: string | Tetromino) {
