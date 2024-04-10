@@ -68,7 +68,7 @@ export class Board {
   }
 
   hasFalling(): boolean {
-    return this.fallingBlock !== undefined;
+    return Boolean(this.fallingBlock);
   }
 
   private toTetromino(block: string | Tetromino) {
