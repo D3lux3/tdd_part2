@@ -66,9 +66,9 @@ export class Board {
     const isBlockFalling = this.moveFallingToDown();
     if (!isBlockFalling) {
       if (this.fallingBlock) {
-        this.fallingBlock.coordinates.forEach(({ x, y }) => {
-          this.blocksOnBoard.set({ x, y }, this.fallingBlock?.symbol as string);
-        });
+        const symbol = this.fallingBlock.symbol;
+        const test = new Map(this.fallingBlock.coordinates.map(coord => [coord, symbol]));
+        this.blocksOnBoard = new Map([...this.blocksOnBoard, ...test])
         delete this.fallingBlock;
       }
       delete this.fallingBlockId;
