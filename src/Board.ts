@@ -60,8 +60,8 @@ export class Board {
     if (!isBlockFalling) {
       if (this.fallingBlock) {
         const symbol = this.fallingBlock.symbol;
-        const test = new Map(this.fallingBlock.coordinates.map(coord => [coord, symbol]));
-        this.blocksOnBoard = new Map([...this.blocksOnBoard, ...test])
+        const fallingCoordinates = new Map(this.fallingBlock.coordinates.map(coord => [coord, symbol]));
+        this.blocksOnBoard = new Map([...this.blocksOnBoard, ...fallingCoordinates])
         delete this.fallingBlock;
       }
     }
