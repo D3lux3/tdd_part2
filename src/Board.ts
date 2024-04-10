@@ -1,16 +1,20 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Tetromino } from './Tetromino';
+import { Coordinate } from './types';
 
 export class Board {
   width: number;
   height: number;
   tetrominos: Map<string, Tetromino>;
-  fallingBlockId: string | undefined
+  fallingBlockId: string | undefined;
+  blocksOnBoard: Map<Coordinate, string>;
+  fallingBlock: Tetromino | undefined;
 
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
     this.tetrominos = new Map();
+    this.blocksOnBoard = new Map();
   }
 
   private isSquareValid(tetromino: Tetromino): boolean {
@@ -60,6 +64,11 @@ export class Board {
   tick(): void {
     const isBlockFalling = this.moveFallingToDown();
     if (!isBlockFalling) {
+      if (this.fallingBlock) {
+        this.fallingBlock.coordinates.forEach(({ x, y }) => {
+          this.blocksOnBoard.set({ x, y }, this.fallingBlock?.symbol as string);
+        });
+      }
       delete this.fallingBlockId;
     }
   }
