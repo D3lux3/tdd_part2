@@ -6,7 +6,6 @@ export class Board {
   width: number;
   height: number;
   tetrominos: Map<string, Tetromino>;
-  fallingBlockId: string | undefined;
   blocksOnBoard: Map<Coordinate, string>;
   fallingBlock: Tetromino | undefined;
 
@@ -24,7 +23,6 @@ export class Board {
 
   private moveFalling(movedBlock: Tetromino): boolean {
     if (this.isSquareValid(movedBlock)) {
-      this.tetrominos.set((this.fallingBlockId as string), movedBlock);
       this.fallingBlock = movedBlock;
       return true;
     }
@@ -69,12 +67,11 @@ export class Board {
         this.blocksOnBoard = new Map([...this.blocksOnBoard, ...test])
         delete this.fallingBlock;
       }
-      delete this.fallingBlockId;
     }
   }
 
   hasFalling(): boolean {
-    return this.fallingBlockId !== undefined && this.fallingBlock !== undefined;
+    return this.fallingBlock !== undefined;
   }
 
   private toTetromino(block: string | Tetromino) {
@@ -108,11 +105,10 @@ export class Board {
   }
 
   drop(block: string | Tetromino): void {
-    if (!this.fallingBlockId) {
+    if (!this.fallingBlock) {
       const blockId = uuidv4();
       const converted = this.toTetromino(block).moveToMiddle(this.width);
       this.tetrominos.set(blockId, converted);
-      this.fallingBlockId = blockId;
       this.fallingBlock = converted;
       return;
     }
