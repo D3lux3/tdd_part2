@@ -124,11 +124,15 @@ export class Board {
   toString() {
     const emptyBoard = (".".repeat(this.width) + "\n").repeat(this.height);
     const boardArray = emptyBoard.split('');
-    for (const block of this.tetrominos.values()) {
-      for (const { x, y } of block.coordinates) {
+    if (this.fallingBlock) {
+      for (const { x, y } of this.fallingBlock.coordinates) {
         const blockIndexOnBoard = (y * (this.width + 1)) + x;
-        boardArray[blockIndexOnBoard] = block.symbol;
+        boardArray[blockIndexOnBoard] = this.fallingBlock.symbol;
       }
+    }
+    for (const [coordinate, symbol] of this.blocksOnBoard) {
+      const blockIndexOnBoard = (coordinate.y * (this.width + 1)) + coordinate.x;
+      boardArray[blockIndexOnBoard] = symbol;
     }
     return boardArray.join("");
   }
