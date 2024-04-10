@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Tetromino } from './Tetromino';
 import { Coordinate } from './types';
 
@@ -104,7 +103,6 @@ export class Board {
 
   drop(block: string | Tetromino): void {
     if (!this.fallingBlock) {
-      const blockId = uuidv4();
       const converted = this.toTetromino(block).moveToMiddle(this.width);
       this.fallingBlock = converted;
       return;
