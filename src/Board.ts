@@ -27,6 +27,7 @@ export class Board {
   private moveFalling(movedBlock: Tetromino): boolean {
     if (this.isSquareValid(movedBlock)) {
       this.tetrominos.set((this.fallingBlockId as string), movedBlock);
+      this.fallingBlock = movedBlock;
       return true;
     }
     return false;
@@ -58,7 +59,7 @@ export class Board {
   }
 
   getFallingTetromino(): Tetromino | undefined {
-    return this.fallingBlockId ? this.tetrominos.get(this.fallingBlockId) : undefined;
+    return this.fallingBlock;
   }
 
   tick(): void {
@@ -68,13 +69,14 @@ export class Board {
         this.fallingBlock.coordinates.forEach(({ x, y }) => {
           this.blocksOnBoard.set({ x, y }, this.fallingBlock?.symbol as string);
         });
+        delete this.fallingBlock;
       }
       delete this.fallingBlockId;
     }
   }
 
   hasFalling(): boolean {
-    return this.fallingBlockId !== undefined;
+    return this.fallingBlockId !== undefined && this.fallingBlock !== undefined;
   }
 
   private toTetromino(block: string | Tetromino) {
@@ -113,6 +115,7 @@ export class Board {
       const converted = this.toTetromino(block).moveToMiddle(this.width);
       this.tetrominos.set(blockId, converted);
       this.fallingBlockId = blockId;
+      this.fallingBlock = converted;
       return;
     }
     throw new Error("already falling");
