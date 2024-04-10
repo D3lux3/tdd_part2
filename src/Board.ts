@@ -17,13 +17,6 @@ export class Board {
     this.blocksOnBoard = new Map();
   }
 
-  private isSquareValid2(tetromino: Tetromino): boolean {
-    const filtered = new Map([...this.tetrominos].filter(([k, _]) => k != this.fallingBlockId));
-    const filteredCoordinates = [...filtered.values()].map(val => val.coordinates).flat();
-    const union = [...filteredCoordinates, ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
-    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.y < 0 || coordinate.x < 0 || coordinate.x >= this.width).length === 0 && new Set(union).size === union.length
-  }
-
   private isSquareValid(tetromino: Tetromino): boolean {
     const union = [...this.blocksOnBoard.keys(), ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
     return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.y < 0 || coordinate.x < 0 || coordinate.x >= this.width).length === 0 && new Set(union).size === union.length
