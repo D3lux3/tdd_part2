@@ -334,6 +334,38 @@ describe("Falling tetrominoes", () => {
   });
 
   test("bottom row gets cleared if full", () => {
+    const halfSizedTetromino = new Tetromino(1, 0, 'F', { x: 0, y: 0 }, [[...Array(5).keys()].map((i) => ({ x: i, y: 0 }))]);
+
+    board.drop(halfSizedTetromino);
+    moveToLeftOfBoard(board);
+    fallToBottom(board);
+
+    board.drop(halfSizedTetromino);
+    moveToRightOfBoard(board);
+
+    expect(board.toString()).to.equalShape(
+      `.....FFFFF
+       ..........
+       ..........
+       ..........
+       ..........
+       FFFFF.....`
+    );
+
+    fallToBottom(board);
+
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  test.skip("bottom row gets cleared if full", () => {
     board.drop(Tetromino.I_SHAPE);
     moveToLeftOfBoard(board);
     fallToBottom(board);
@@ -342,9 +374,26 @@ describe("Falling tetrominoes", () => {
     board.moveFallingToRight();
     fallToBottom(board);
 
-    board.drop(Tetromino.O_SHAPE);
-    moveToRightOfBoard(board);
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateFallingBlockLeft();
+    board.moveFallingToRight();
+    board.moveFallingToRight();
+    board.moveFallingToRight();
+    board.moveFallingToRight();
     fallToBottom(board);
+
+    board.drop(Tetromino.I_SHAPE);
+    board.moveFallingToRight();
+    fallToBottom(board);
+
+    board.drop(Tetromino.I_SHAPE);
+    moveToLeftOfBoard(board);
+    fallToBottom(board);
+
+    board.drop(Tetromino.I_SHAPE);
+    moveToLeftOfBoard(board);
+    fallToBottom(board);
+
 
     expect(board.toString()).to.equalShape(
       `..........
@@ -352,8 +401,7 @@ describe("Falling tetrominoes", () => {
        ..........
        ..........
        ..........
-       ........OO`
+       IIII...TT.`
     );
   });
-
 });
