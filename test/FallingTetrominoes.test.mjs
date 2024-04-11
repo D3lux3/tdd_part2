@@ -365,7 +365,7 @@ describe("Falling tetrominoes", () => {
     );
   });
 
-  test.skip("bottom row gets cleared if full", () => {
+  test("after clearing bottom row, upper rows should drop down", () => {
     board.drop(Tetromino.I_SHAPE);
     moveToLeftOfBoard(board);
     fallToBottom(board);
@@ -374,26 +374,9 @@ describe("Falling tetrominoes", () => {
     board.moveFallingToRight();
     fallToBottom(board);
 
-    board.drop(Tetromino.T_SHAPE);
-    board.rotateFallingBlockLeft();
-    board.moveFallingToRight();
-    board.moveFallingToRight();
-    board.moveFallingToRight();
-    board.moveFallingToRight();
+    board.drop(Tetromino.O_SHAPE);
+    moveToRightOfBoard(board);
     fallToBottom(board);
-
-    board.drop(Tetromino.I_SHAPE);
-    board.moveFallingToRight();
-    fallToBottom(board);
-
-    board.drop(Tetromino.I_SHAPE);
-    moveToLeftOfBoard(board);
-    fallToBottom(board);
-
-    board.drop(Tetromino.I_SHAPE);
-    moveToLeftOfBoard(board);
-    fallToBottom(board);
-
 
     expect(board.toString()).to.equalShape(
       `..........
@@ -401,7 +384,7 @@ describe("Falling tetrominoes", () => {
        ..........
        ..........
        ..........
-       IIII...TT.`
+       ........OO`
     );
   });
 });
