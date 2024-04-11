@@ -59,11 +59,19 @@ export class Board {
     const isBlockFalling = this.moveFallingToDown();
     if (!isBlockFalling) {
       this.addFallingToBlocksOnBoard();
+      this.clearFullLines();
     }
   }
 
   hasFalling(): boolean {
     return Boolean(this.fallingBlock);
+  }
+
+  private clearFullLines() {
+    this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => {
+      const isLineFull = [...this.blocksOnBoard.keys()].filter(({ y }) => y === coordinate.y).length === this.width;
+      return !isLineFull;
+    }));
   }
 
   private addFallingToBlocksOnBoard() {
