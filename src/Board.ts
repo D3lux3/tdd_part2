@@ -13,9 +13,13 @@ export class Board {
     this.blocksOnBoard = new Map();
   }
 
+  private isCoordinatesValid(coordinate: Coordinate): boolean {
+    return coordinate.y < this.height && coordinate.y >= 0 && coordinate.x >= 0 && coordinate.x < this.width
+  }
+
   private isSquareValid(tetromino: Tetromino): boolean {
     const union = [...this.blocksOnBoard.keys(), ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
-    return tetromino.coordinates.filter((coordinate) => coordinate.y >= this.height || coordinate.y < 0 || coordinate.x < 0 || coordinate.x >= this.width).length === 0 && new Set(union).size === union.length
+    return tetromino.coordinates.filter((coordinate) => !this.isCoordinatesValid(coordinate)).length === 0 && new Set(union).size === union.length
   }
 
   private moveFalling(movedBlock: Tetromino): boolean {
