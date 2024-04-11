@@ -72,10 +72,13 @@ export class Board {
   }
 
   private clearFullLines() {
-    this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => {
-      const isLineFull = [...this.blocksOnBoard.keys()].filter(({ y }) => y === coordinate.y).length === this.width;
+    const blocksOnBoardKeys = [...this.blocksOnBoard.keys()];
+
+    const clearedLines = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => {
+      const isLineFull = blocksOnBoardKeys.filter(({ y }) => y === coordinate.y).length === this.width;
       return !isLineFull;
     }));
+    this.blocksOnBoard = new Map(clearedLines);
   }
 
   private addFallingToBlocksOnBoard() {
