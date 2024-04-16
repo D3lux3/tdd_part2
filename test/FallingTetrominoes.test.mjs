@@ -387,4 +387,29 @@ describe("Falling tetrominoes", () => {
        ........OO`
     );
   });
+
+  test("Performs sticky gravity after clearing lines", () => {
+    const boardState = `..........
+..........
+..........
+X.....Y...
+IIIIIIIII.
+.T.....OO.
+TTTIIIIOO.`
+    const initializedBoard = new Board(10, 7, boardState);
+    initializedBoard.drop(Tetromino.T_SHAPE);
+    initializedBoard.rotateFallingBlockLeft();
+    moveToRightOfBoard(initializedBoard);
+    fallToBottom(initializedBoard);
+
+    expect(initializedBoard.toString()).to.equalShape(
+      `..........
+       ..........
+       ..........
+       .........T
+       ........TT
+       XT....YOO.
+       TTTIIIIOO.`
+    );
+  })
 });
