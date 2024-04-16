@@ -7,10 +7,24 @@ export class Board {
   blocksOnBoard: Map<Coordinate, string>;
   fallingBlock: Tetromino | undefined;
 
-  constructor(width: number, height: number) {
+  constructor(width: number, height: number, boardState?: string) {
     this.width = width;
     this.height = height;
     this.blocksOnBoard = new Map();
+    if (boardState) {
+      this.initBoardState(boardState);
+    }
+  }
+
+  private initBoardState(boardState: string) {
+    const boardArray = boardState.split('');
+    for (let i = 0; i < boardArray.length; i++) {
+      const x = i % (this.width + 1);
+      const y = Math.floor(i / (this.width + 1));
+      if (boardArray[i] !== ".") {
+        this.blocksOnBoard.set({ x, y }, boardArray[i]);
+      }
+    }
   }
 
   private isCoordinatesValid(coordinate: Coordinate): boolean {
