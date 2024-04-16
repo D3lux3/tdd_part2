@@ -17,14 +17,14 @@ export class Board {
   }
 
   private initBoardState(boardState: string) {
-    const boardArray = boardState.split('');
-    for (let i = 0; i < boardArray.length; i++) {
-      const x = i % (this.width + 1);
-      const y = Math.floor(i / (this.width + 1));
-      if (boardArray[i] !== ".") {
-        this.blocksOnBoard.set({ x, y }, boardArray[i]);
-      }
-    }
+    const boardArray = boardState.split('\n');
+    boardArray.forEach((row, y) => {
+      row.split('').forEach((symbol, x) => {
+        if (symbol !== '.') {
+          this.blocksOnBoard.set({ x, y }, symbol);
+        }
+      });
+    });
   }
 
   private isCoordinatesValid(coordinate: Coordinate): boolean {
