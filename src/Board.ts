@@ -102,13 +102,19 @@ export class Board {
   clearFullLines() {
     if (!this.fallingBlock) {
       const fullRows = this.getFullRowsOnBoard();
-      const clearedBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => !fullRows[coordinate.y]));
-      const visitedBlocks: { [x: number]: { [y: number]: boolean } } = {};
+      const clearedBoard = new Map([...this.blocksOnBoard].filter(([coordinate, symbol]) => !fullRows[coordinate.y]));
+      const visitedBlocks = new Map<Coordinate, boolean>();
       const blocksAboveClearedLines = [...clearedBoard.keys()].filter(({ x, y }) => Object.keys(fullRows).some((value) => parseInt(value) > y)).sort((a, b) => b.y - a.y);
-      for (const { x: blockX, y: blockY } of blocksAboveClearedLines) {
-        if (!visitedBlocks[blockX][blockY]) {
-          const blockSymbol = clearedBoard.get({ x: blockX, y: blockY });
-          visitedBlocks[blockX][blockY] = true;
+      for (const coordinate of blocksAboveClearedLines) {
+        const { x: blockX, y: blockY } = coordinate;
+        if (!visitedBlocks.get(coordinate)) {
+          const blockSymbol = this.blocksOnBoard.get(coordinate);
+          const droppedCoordinates = { x: blockX, y: blockY + 1 };
+          visitedBlocks.set(coordinate, true);
+          if (this.isCoordinatesEmpty([...clearedBoard.keys()], [droppedCoordinates]) && this.isCoordinatesValid(droppedCoordinates) && blockSymbol) {
+            clearedBoard.delete(coordinate);
+            clearedBoard.set(droppedCoordinates, blockSymbol);
+          }
         }
       }
       this.blocksOnBoard = clearedBoard;
