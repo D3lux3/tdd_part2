@@ -102,7 +102,16 @@ export class Board {
   clearFullLines() {
     if (!this.fallingBlock) {
       const fullRows = this.getFullRowsOnBoard();
-      this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => !fullRows[coordinate.y]));
+      const clearedBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => !fullRows[coordinate.y]));
+      const visitedBlocks: { [x: number]: { [y: number]: boolean } } = {};
+      const blocksAboveClearedLines = [...clearedBoard.keys()].filter(({ x, y }) => Object.keys(fullRows).some((value) => parseInt(value) > y)).sort((a, b) => b.y - a.y);
+      for (const { x: blockX, y: blockY } of blocksAboveClearedLines) {
+        if (!visitedBlocks[blockX][blockY]) {
+          const blockSymbol = clearedBoard.get({ x: blockX, y: blockY });
+          visitedBlocks[blockX][blockY] = true;
+        }
+      }
+      this.blocksOnBoard = clearedBoard;
     }
   }
 
