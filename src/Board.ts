@@ -98,6 +98,7 @@ export class Board {
     }, {});
     return Object.entries(blockCountPerRow).filter(([_, count]) => count === this.width).map(([y, _]) => parseInt(y));
   }
+
   clearFullLines() {
     if (!this.fallingBlock) {
       const fullRows = this.getFullRowsOnBoard();
