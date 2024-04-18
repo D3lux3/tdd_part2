@@ -96,13 +96,13 @@ export class Board {
       acc[coordinate.y] = (acc[coordinate.y] || 0) + 1;
       return acc;
     }, {});
-    return Object.entries(blockCountPerRow).filter(([_, count]) => count === this.width).map(([y, _]) => parseInt(y));
+    return Object.fromEntries(Object.entries(blockCountPerRow).filter(([_, count]) => count === this.width));
   }
 
   clearFullLines() {
     if (!this.fallingBlock) {
       const fullRows = this.getFullRowsOnBoard();
-      this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => !fullRows.some((val) => val === coordinate.y)));
+      this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => !fullRows[coordinate.y]));
     }
   }
 
