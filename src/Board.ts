@@ -90,14 +90,18 @@ export class Board {
     return Boolean(this.fallingBlock);
   }
 
+  private getFullRowsOnBoard() {
+    const blocksOnBoardKeys = [...this.blocksOnBoard.keys()];
+    const blockCountPerRow = blocksOnBoardKeys.reduce((acc: { [key: number]: number }, coordinate) => {
+      acc[coordinate.y] = (acc[coordinate.y] || 0) + 1;
+      return acc;
+    }, {});
+    return Object.entries(blockCountPerRow).filter(([_, count]) => count === this.width).map(([y, _]) => parseInt(y));
+  }
   clearFullLines() {
     if (!this.fallingBlock) {
-      const blocksOnBoardKeys = [...this.blocksOnBoard.keys()];
-      const fullRows = blocksOnBoardKeys.reduce((acc: { [key: number]: number }, coordinate) => {
-        acc[coordinate.y] = (acc[coordinate.y] || 0) + 1;
-        return acc;
-      }, {});
-      this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => fullRows[coordinate.y] !== this.width));
+      const fullRows = this.getFullRowsOnBoard();
+      this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => !fullRows.some((val) => val === coordinate.y)));
     }
   }
 
