@@ -31,9 +31,14 @@ export class Board {
     return coordinate.y < this.height && coordinate.y >= 0 && coordinate.x >= 0 && coordinate.x < this.width
   }
 
+  private isCoordinatesEmpty(boardCoordinates: Coordinate[], coordinates: Coordinate[]): boolean {
+    const union = [...boardCoordinates, ...coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
+    return new Set(union).size === union.length
+  }
+
   private isSquareValid(tetromino: Tetromino): boolean {
-    const union = [...this.blocksOnBoard.keys(), ...tetromino.coordinates].map(({ x, y }) => `(${y},${x})`); // Coordinates to string, so that Set works.
-    return tetromino.coordinates.filter((coordinate) => !this.isCoordinatesValid(coordinate)).length === 0 && new Set(union).size === union.length
+    const isOverlapping = this.isCoordinatesEmpty([...this.blocksOnBoard.keys()], tetromino.coordinates);
+    return isOverlapping && tetromino.coordinates.filter((coordinate) => !this.isCoordinatesValid(coordinate)).length === 0
   }
 
   private moveFalling(movedBlock: Tetromino): boolean {
