@@ -85,26 +85,6 @@ export class Board {
     return Boolean(this.fallingBlock);
   }
 
-  private clearFullLines2() {
-    const blocksOnBoardKeys = [...this.blocksOnBoard.keys()];
-
-    const clearedLines = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => {
-      const isLineFull = blocksOnBoardKeys.filter(({ y }) => y === coordinate.y).length === this.width;
-      return !isLineFull;
-    }));
-    const clearedLinesCount = (blocksOnBoardKeys.length - clearedLines.size) / this.width;
-    for (let i = 0; i < clearedLinesCount; i++) {
-      for (const [coordinate, symbol] of [...clearedLines]) {
-        const newCoords = { ...coordinate, y: coordinate.y + 1 };
-        if (clearedLines.get(newCoords) === undefined && this.isCoordinatesValid(newCoords)) {
-          clearedLines.set(newCoords, symbol)
-          clearedLines.delete(coordinate);
-        }
-      }
-    }
-    this.blocksOnBoard = new Map(clearedLines);
-  }
-
   clearFullLines() {
     if (!this.fallingBlock) {
       const blocksOnBoardKeys = [...this.blocksOnBoard.keys()];
