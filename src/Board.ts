@@ -85,7 +85,7 @@ export class Board {
     return Boolean(this.fallingBlock);
   }
 
-  private clearFullLines() {
+  private clearFullLines2() {
     const blocksOnBoardKeys = [...this.blocksOnBoard.keys()];
 
     const clearedLines = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => {
@@ -103,6 +103,17 @@ export class Board {
       }
     }
     this.blocksOnBoard = new Map(clearedLines);
+  }
+
+  clearFullLines() {
+    if (!this.fallingBlock) {
+      const blocksOnBoardKeys = [...this.blocksOnBoard.keys()];
+      const fullRows = blocksOnBoardKeys.reduce((acc: { [key: number]: number }, coordinate) => {
+        acc[coordinate.y] = (acc[coordinate.y] || 0) + 1;
+        return acc;
+      }, {});
+      this.blocksOnBoard = new Map([...this.blocksOnBoard].filter(([coordinate, _]) => fullRows[coordinate.y] !== this.width));
+    }
   }
 
   private addFallingToBlocksOnBoard() {
