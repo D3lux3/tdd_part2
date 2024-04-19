@@ -17,7 +17,9 @@ export class Shufflebag {
         const t_shapes = Math.floor(this.bagSize / Shufflebag.T_SHAPE_COUNT)
         const o_shapes = Math.floor(this.bagSize / Shufflebag.O_SHAPE_COUNT)
         const i_shapes = Math.floor(this.bagSize / Shufflebag.I_SHAPE_COUNT)
-        return [...Array(t_shapes).fill(Tetromino.T_SHAPE), ...Array(o_shapes).fill(Tetromino.O_SHAPE), ...Array(i_shapes).fill(Tetromino.I_SHAPE)]
+        return [...Array(t_shapes).fill(Tetromino.T_SHAPE), ...Array(o_shapes).fill(Tetromino.O_SHAPE), ...Array(i_shapes).fill(Tetromino.I_SHAPE)].map(value => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value)
     }
 
     getTetrominos() {
