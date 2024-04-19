@@ -6,7 +6,7 @@ import { Board } from '../src/Board.js';
 describe("Subscriber", () => {
     let subscriber: Subscriber;
     beforeEach(() => {
-        subscriber = new Subscriber(0, 1);
+        subscriber = new Subscriber(0, [1, 2, 4, 8]);
     });
 
     test("points are zero initially", () => {
