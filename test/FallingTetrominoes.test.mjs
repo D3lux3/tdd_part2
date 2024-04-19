@@ -3,6 +3,7 @@ import { beforeEach, describe, test } from "vitest";
 import { expect } from "chai";
 import { Board } from "../src/Board.ts";
 import { Tetromino } from "../src/Tetromino.ts";
+import { Subscriber } from "../src/Subscriber.ts";
 
 function fallToBottom(board) {
   for (let i = 0; i < 10; i++) {
@@ -411,5 +412,35 @@ TTTIIIIOO.`
        XT....YOO.
        TTTIIIIOO.`
     );
+  });
+
+  test("after clearing one line, player gets 10 points", () => {
+    const boardState = `..........
+..........
+..........
+..........
+..........
+IIIIIIIII.`
+
+    const initializedBoard = new Board(10, 6, boardState);
+    const scoringSystem = new Subscriber();
+    initializedBoard.addSubscriber(scoringSystem);
+    expect(scoringSystem.getPoints()).equal(0);
+    initializedBoard.drop(Tetromino.I_SHAPE);
+    initializedBoard.rotateFallingBlockRight();
+    moveToRightOfBoard(initializedBoard);
+    fallToBottom(initializedBoard);
+
+    expect(initializedBoard.toString()).to.equalShape(
+      `..........
+       ..........
+       ..........
+       .........I
+       .........I
+       .........I`
+    );
+    expect(initializedBoard.getSubscribers()[0].getPoints()).equal(1);
   })
+
+
 });
