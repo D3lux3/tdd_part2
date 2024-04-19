@@ -423,7 +423,7 @@ TTTIIIIOO.`
 IIIIIIIII.`
 
     const initializedBoard = new Board(10, 6, boardState);
-    const scoringSystem = new Subscriber();
+    const scoringSystem = new Subscriber(0, [10]);
     initializedBoard.addSubscriber(scoringSystem);
     expect(scoringSystem.getPoints()).equal(0);
     initializedBoard.drop(Tetromino.I_SHAPE);
@@ -439,7 +439,7 @@ IIIIIIIII.`
        .........I
        .........I`
     );
-    expect(initializedBoard.getSubscribers()[0].getPoints()).equal(1);
+    expect(initializedBoard.getSubscribers()[0].getPoints()).equal(10);
   })
 
 
