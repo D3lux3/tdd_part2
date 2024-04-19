@@ -11,4 +11,8 @@ export class Subscriber {
     getPoints() {
         return this.subscriber.getPoints();
     }
+
+    toString() {
+        return this.subscriber.toString();
+    }
 }
