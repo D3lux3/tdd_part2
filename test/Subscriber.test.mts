@@ -12,4 +12,8 @@ describe("Subscriber", () => {
     test("points are zero initially", () => {
         expect(subscriber.getPoints()).equal(0);
     })
+
+    test("toString is in right format", () => {
+        expect(subscriber.toString()).to.equalShape(`Score: 0`)
+    })
 })
