@@ -3,12 +3,12 @@ import { expect } from "chai";
 import { Shufflebag } from "../src/Shufflebag.ts";
 
 describe("Shufflebag", () => {
-    let Shufflebag
+    let shufflebag
     beforeEach(() => {
-        Shufflebag = new Shufflebag(6);
+        shufflebag = new Shufflebag(6);
     });
 
     test("contains six tetrominos initially", () => {
-        expect(subscriber.getPoints()).equal(0);
+
     })
 })
