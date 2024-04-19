@@ -6,7 +6,7 @@ import { Tetromino } from "../src/Tetromino.ts";
 describe("Shufflebag", () => {
     let shufflebag
     beforeEach(() => {
-        shufflebag = new Shufflebag(6);
+        shufflebag = new Shufflebag(undefined, 6);
     });
 
     test("contains six tetrominos initially", () => {
