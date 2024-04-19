@@ -1,4 +1,4 @@
-
+import { Tetromino } from "./Tetromino"
 export class Shufflebag {
 
     constructor() {
@@ -6,6 +6,6 @@ export class Shufflebag {
     }
 
     getTetrominos() {
-        return new Array(6)
+        return [Tetromino.T_SHAPE, Tetromino.T_SHAPE, Tetromino.T_SHAPE, Tetromino.O_SHAPE, Tetromino.O_SHAPE, Tetromino.I_SHAPE]
     }
 }
