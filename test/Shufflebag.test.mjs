@@ -1,6 +1,6 @@
 import { beforeEach, describe, test } from "vitest";
 import { expect } from "chai";
-import { Shufflebag } from "../src/Shufflebag.js";
+import { Shufflebag } from "../src/Shufflebag.ts";
 
 describe("Shufflebag", () => {
     let Shufflebag
