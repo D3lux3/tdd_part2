@@ -4,8 +4,8 @@ import { ScoringRules } from "./ScoringRules";
 export class Subscriber {
     subscriber: ScoringRules
 
-    constructor(points?: number, multiplier?: number) {
-        this.subscriber = new ScoringRules(points, multiplier);
+    constructor(points?: number, multipliers?: number[]) {
+        this.subscriber = new ScoringRules(points, multipliers);
     }
 
     getPoints() {
@@ -13,8 +13,9 @@ export class Subscriber {
     }
 
     addPoints(rows: number) {
-        const multiplier = this.subscriber.multiplier
-        return new Subscriber(this.subscriber.getPoints() + (rows * multiplier), multiplier)
+        const multipliers = this.subscriber.multipliers
+        const index = Math.min(Math.abs(rows), 4)
+        return new Subscriber(this.subscriber.getPoints() + multipliers[index], multipliers);
     }
 
     toString() {
