@@ -7,11 +7,13 @@ export class Board {
   height: number;
   blocksOnBoard: Map<Coordinate, string>;
   fallingBlock: Tetromino | undefined;
+  subscribers: Subscriber[];
 
   constructor(width: number, height: number, boardState?: string) {
     this.width = width;
     this.height = height;
     this.blocksOnBoard = new Map();
+    this.subscribers = [];
     if (boardState) {
       this.initBoardState(boardState);
     }
@@ -182,11 +184,11 @@ export class Board {
   }
 
   addSubscriber(subscriber: Subscriber) {
-
+    this.subscribers = [...this.subscribers, subscriber];
   }
 
   getSubscribers() {
-    return [];
+    return this.subscribers;
   }
 
   toString() {
