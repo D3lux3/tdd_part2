@@ -1,3 +1,4 @@
+import { Subscriber } from './Subscriber';
 import { Tetromino } from './Tetromino';
 import { Coordinate } from './types';
 
@@ -178,6 +179,10 @@ export class Board {
       return;
     }
     throw new Error("already falling");
+  }
+
+  addSubscriber(subscriber: Subscriber) {
+
   }
 
   toString() {
