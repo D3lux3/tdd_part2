@@ -7,4 +7,8 @@ export class Subscriber {
     constructor() {
         this.subscriber = new ScoringRules();
     }
+
+    getPoints() {
+        return this.subscriber.getPoints();
+    }
 }

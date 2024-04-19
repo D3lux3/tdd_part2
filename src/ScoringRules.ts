@@ -5,6 +5,9 @@ export class ScoringRules {
         this.points = 0;
     }
 
+    getPoints() {
+        return this.points;
+    }
 
     toString() {
         return `Score: ${this.points}`;
