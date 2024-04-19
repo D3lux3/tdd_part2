@@ -9,6 +9,6 @@ describe("Shufflebag", () => {
     });
 
     test("contains six tetrominos initially", () => {
-
+        expect(shufflebag.getTetrominos().length).equal(6);
     })
 })
