@@ -12,12 +12,14 @@ describe("Board", () => {
 
     test("allows getting all subscribers", () => {
         const subscribers: Subscriber[] = board.getSubscribers();
-        expect(subscribers.length === 0);
+        expect(subscribers.length).equal(0);
     });
 
     test("allows adding new subscribers", () => {
         const scoringSystem = new Subscriber();
         board.addSubscriber(scoringSystem);
+        console.log(board.getSubscribers().length)
+        expect(board.getSubscribers().length).equal(1);
     });
 
 });
