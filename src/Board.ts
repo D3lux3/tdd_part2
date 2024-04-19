@@ -115,18 +115,17 @@ export class Board {
       const clearedBoard = new Map([...this.blocksOnBoard].filter(([coordinate, symbol]) => !fullRows[coordinate.y]));
       const clearedStringed = new Map([...clearedBoard].map(([{ x, y }, v]) => [`${x},${y}`, v]));
       const visitedBlocks = new Map<string, boolean>();
-      const blocksAboveClearedLines = [...clearedBoard.keys()].filter(({ x, y }) => Object.keys(fullRows).some((value) => parseInt(value) > y)).sort((a, b) => b.y - a.y);
-
-      for (const blockCoordinates of blocksAboveClearedLines) {
-        const strCoords = this.coordinatesToString(blockCoordinates);
-        if (!visitedBlocks.get(strCoords)) {
-          const blockSymbol = clearedStringed.get(strCoords);
-          const droppedCoordinates = { ...blockCoordinates, y: blockCoordinates.y + 1 };
-          visitedBlocks.set(strCoords, true);
-          if (this.isCoordinatesEmpty([...clearedBoard.keys()], [droppedCoordinates]) && this.isCoordinatesValid(droppedCoordinates) && blockSymbol) {
-            clearedStringed.delete(strCoords);
-            clearedStringed.set(this.coordinatesToString(droppedCoordinates), blockSymbol);
-          }
+      for (const { x, y } of [...clearedBoard.keys()]) {
+        const coordinates = new Array(0, 1, -1).map((value) => ({ strCoords: this.coordinatesToString(({ x: x + (value), y: y })), droppedCoordinates: { x: x + (value), y: y + 1 } })).map(({ strCoords, ...rest }) => ({ coordinates: strCoords, symbol: clearedStringed.get(strCoords), ...rest })).filter((obj) => !visitedBlocks.get(obj.coordinates) && obj.symbol);
+        const droppedCoordinates = coordinates.map((obj) => (obj.droppedCoordinates));
+        if (this.isCoordinatesEmpty([...clearedBoard.keys()], droppedCoordinates)
+          && droppedCoordinates.filter((coord) => !this.isCoordinatesValid(coord)).length === 0
+        ) {
+          coordinates.forEach((obj) => {
+            clearedStringed.set(this.coordinatesToString(obj.droppedCoordinates), obj.symbol || '?')
+            clearedStringed.delete(obj.coordinates)
+            visitedBlocks.set(obj.coordinates, true);
+          });
         }
       }
       this.blocksOnBoard = new Map([...clearedStringed].map(([k, v]) => [this.toCoordinates(k), v]));
