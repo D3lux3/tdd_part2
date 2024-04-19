@@ -365,7 +365,7 @@ describe("Falling tetrominoes", () => {
     );
   });
 
-  test("after clearing bottom row, upper rows should drop down", () => {
+  test("after clearing bottom row, rows above should drop down", () => {
     board.drop(Tetromino.I_SHAPE);
     moveToLeftOfBoard(board);
     fallToBottom(board);
