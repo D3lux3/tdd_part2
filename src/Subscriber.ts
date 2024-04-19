@@ -12,6 +12,11 @@ export class Subscriber {
         return this.subscriber.getPoints();
     }
 
+    addPoints(rows: number) {
+        const multiplier = this.subscriber.multiplier
+        return new Subscriber(this.subscriber.getPoints() + (rows * multiplier), multiplier)
+    }
+
     toString() {
         return this.subscriber.toString();
     }
