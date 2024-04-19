@@ -14,7 +14,7 @@ export class Subscriber {
 
     addPoints(rows: number) {
         const multipliers = this.subscriber.multipliers
-        const index = Math.min(Math.abs(rows), 4)
+        const index = Math.min(Math.abs(rows - 1), 3)
         return new Subscriber(this.subscriber.getPoints() + multipliers[index], multipliers);
     }
 
