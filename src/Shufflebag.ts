@@ -5,4 +5,7 @@ export class Shufflebag {
 
     }
 
+    getTetrominos() {
+        return new Array(6)
+    }
 }
