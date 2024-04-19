@@ -1,8 +1,9 @@
 import { Tetromino } from "./Tetromino"
 export class Shufflebag {
+    bagSize: number;
 
-    constructor() {
-
+    constructor(bagSize?: number) {
+        this.bagSize = bagSize || 10;
     }
 
     getTetrominos() {
