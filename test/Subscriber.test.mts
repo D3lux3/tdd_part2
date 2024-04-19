@@ -14,6 +14,6 @@ describe("Subscriber", () => {
     })
 
     test("toString is in right format", () => {
-        expect(subscriber.toString()).to.equalShape(`Score: 0`)
+        expect(subscriber.toString()).to.equal(`Score: 0`)
     })
 })
