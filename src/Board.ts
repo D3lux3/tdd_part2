@@ -185,6 +185,10 @@ export class Board {
 
   }
 
+  getSubscribers() {
+    return [];
+  }
+
   toString() {
     const emptyBoard = (".".repeat(this.width) + "\n").repeat(this.height);
     const boardArray = emptyBoard.split('');
