@@ -4,8 +4,8 @@ import { ScoringRules } from "./ScoringRules";
 export class Subscriber {
     subscriber: ScoringRules
 
-    constructor() {
-        this.subscriber = new ScoringRules();
+    constructor(points?: number, multiplier?: number) {
+        this.subscriber = new ScoringRules(points, multiplier);
     }
 
     getPoints() {

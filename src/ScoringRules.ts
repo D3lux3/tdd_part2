@@ -1,8 +1,10 @@
 export class ScoringRules {
     points: number;
+    multiplier: number;
 
-    constructor() {
-        this.points = 0;
+    constructor(points?: number, multiplier?: number) {
+        this.points = points || 0;
+        this.multiplier = multiplier || 1;
     }
 
     getPoints() {
