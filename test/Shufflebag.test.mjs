@@ -6,7 +6,7 @@ import { Tetromino } from "../src/Tetromino.ts";
 describe("Shufflebag", () => {
     let shufflebag
     beforeEach(() => {
-        shufflebag = new Shufflebag(undefined, 6);
+        shufflebag = new Shufflebag("init", undefined, 6);
     });
 
     test("contains six tetrominos initially", () => {
@@ -23,4 +23,11 @@ describe("Shufflebag", () => {
         expect(o_shapes).equal(2);
         expect(i_shapes).equal(1);
     })
+
+    test("id does not change if bag contains tetromino", () => {
+        const [_, newShuffle] = shufflebag.pull();
+        expect(newShuffle.id).equal("init");
+        expect(newShuffle.getTetrominos().length).equal(5);
+    })
+
 })
