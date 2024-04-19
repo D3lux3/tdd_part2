@@ -115,6 +115,7 @@ export class Board {
   clearFullLines() {
     if (!this.fallingBlock) {
       const fullRows = this.getFullRowsOnBoard();
+      const clearedRowsCount = Object.keys(fullRows).length;
       const clearedBoard = new Map([...this.blocksOnBoard].filter(([coordinate, symbol]) => !fullRows[coordinate.y]));
       const clearedStringed = new Map([...clearedBoard].map(([{ x, y }, v]) => [`${x},${y}`, v]));
       const visitedBlocks = new Map<string, boolean>();
@@ -131,6 +132,7 @@ export class Board {
           });
         }
       }
+      this.notifySubscribers(clearedRowsCount);
       this.blocksOnBoard = new Map([...clearedStringed].map(([k, v]) => [this.toCoordinates(k), v]));
     }
   }
