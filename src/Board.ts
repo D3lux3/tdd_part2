@@ -191,6 +191,10 @@ export class Board {
     return this.subscribers;
   }
 
+  notifySubscribers(rowsCleared: number) {
+    this.subscribers = this.subscribers.map((sub) => sub.addPoints(rowsCleared));
+  }
+
   toString() {
     const emptyBoard = (".".repeat(this.width) + "\n").repeat(this.height);
     const boardArray = emptyBoard.split('');
