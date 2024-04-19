@@ -4,7 +4,7 @@ export class ScoringRules {
 
     constructor(points?: number, multipliers?: number[]) {
         this.points = points || 0;
-        this.multipliers = multipliers || [40, 100, 300, 1200];
+        this.multipliers = multipliers ? [0, ...multipliers] : [0, 40, 100, 300, 1200];
     }
 
     getPoints() {
