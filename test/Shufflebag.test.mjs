@@ -30,4 +30,17 @@ describe("Shufflebag", () => {
         expect(newShuffle.getTetrominos().length).equal(5);
     })
 
+    test("starts over after running out of tetrominos", () => {
+        let shuffle = shufflebag;
+        for (let i = 0; i < 6; ++i) {
+            if (i < 6) {
+                expect(shuffle.id).equal("init");
+            }
+            const [_, newBag] = shuffle.pull();
+            shuffle = newBag;
+        }
+        expect(shuffle.id).not.eq("init");
+        expect(shuffle.getTetrominos().length).equal(6);
+
+    })
 })
