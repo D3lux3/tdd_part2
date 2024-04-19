@@ -16,4 +16,9 @@ describe("Subscriber", () => {
     test("toString is in right format", () => {
         expect(subscriber.toString()).to.equal(`Score: 0`)
     })
+
+    test("points can be added", () => {
+        const updated = subscriber.addPoints(1);
+        expect(updated.getPoints()).equal(1);
+    })
 })
