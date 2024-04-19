@@ -18,7 +18,6 @@ describe("Board", () => {
     test("allows adding new subscribers", () => {
         const scoringSystem = new Subscriber();
         board.addSubscriber(scoringSystem);
-        console.log(board.getSubscribers().length)
         expect(board.getSubscribers().length).equal(1);
     });
 
